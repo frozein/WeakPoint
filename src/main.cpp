@@ -41,7 +41,10 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	sim::Chunk testChunk = sim::Chunk(renderer);
+	//sim::Chunk testChunk = sim::Chunk(renderer);
+	//testChunk.gen(0, 0);
+	sim::World testWorld = sim::World(renderer, 5, 3);
+	testWorld.gen(123);
 
 	bool running = true;
 	while(running)
@@ -61,7 +64,7 @@ int main(int argc, char **argv)
 
 		SDL_RenderClear(renderer);
 
-		testChunk.render(renderer, 0, 0, 2000, 2000);
+		testWorld.render(renderer, 0, 0, 1000);
 
 		SDL_RenderPresent(renderer);
 	}

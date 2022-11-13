@@ -38,20 +38,27 @@ private:
 public:
 	Particle p[SIM_CHUNK_SIZE][SIM_CHUNK_SIZE];
 
-	Chunk(SDL_Renderer* renderer);
+	Chunk();
 	~Chunk();
+	void init(SDL_Renderer* renderer);
 
+	void gen(int x, int y);
 	void render(SDL_Renderer* renderer, int x, int y, int w, int h);
 };
 
-class World
+class World //TODO: infinite terrain
 {
 public:
 	int w, h;
 	Chunk* c;
 
+	World(SDL_Renderer* renderer, int w, int h);
+	~World();
+
+	void gen(unsigned int seed);
+
 	void update();
-	void render(SDL_Renderer* renderer);
+	void render(SDL_Renderer* renderer, int camX, int camY, int renderSize);
 };
 
 }

@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	//init main subsystems, window, and renderer:
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS) == 0)
 	{
-		window = SDL_CreateWindow("DroneGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_RESIZABLE);
+		window = SDL_CreateWindow("ScarletGameJam", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_RESIZABLE);
 
 		if (window)
 		{
@@ -41,10 +41,8 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	//sim::Chunk testChunk = sim::Chunk(renderer);
-	//testChunk.gen(0, 0);
-	sim::World testWorld = sim::World(renderer, 5, 3);
-	testWorld.gen(123);
+	float camX = 0.0f, camY = 0.0f;
+	sim::World testWorld = sim::World(renderer, "test.png"); //TODO: fix
 
 	bool running = true;
 	while(running)
@@ -64,7 +62,7 @@ int main(int argc, char **argv)
 
 		SDL_RenderClear(renderer);
 
-		testWorld.render(renderer, 0, 0, 1000);
+		testWorld.render(renderer, 0, 0, 25);
 
 		SDL_RenderPresent(renderer);
 	}

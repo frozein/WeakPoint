@@ -27,35 +27,17 @@ struct Particle
 	} type;
 };
 
-class World;
-
-#define SIM_CHUNK_SIZE 64 
-class Chunk
+class World //TODO: infinite terrain
 {
 private:
 	SDL_Texture* tex;
 
 public:
-	Particle p[SIM_CHUNK_SIZE][SIM_CHUNK_SIZE];
-
-	Chunk();
-	~Chunk();
-	void init(SDL_Renderer* renderer);
-
-	void gen(int x, int y);
-	void render(SDL_Renderer* renderer, int x, int y, int w, int h);
-};
-
-class World //TODO: infinite terrain
-{
-public:
 	int w, h;
-	Chunk* c;
+	Particle* p;
 
-	World(SDL_Renderer* renderer, int w, int h);
+	World(SDL_Renderer* renderer, const char* path);
 	~World();
-
-	void gen(unsigned int seed);
 
 	void update();
 	void render(SDL_Renderer* renderer, int camX, int camY, int renderSize);

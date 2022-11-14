@@ -42,9 +42,10 @@ int main(int argc, char **argv)
 	}
 
 	float camX = 0.0f, camY = 0.0f;
-	sim::World testWorld = sim::World(renderer, "test.png"); //TODO: fix
+	sim::World testWorld = sim::World(renderer, "../../assets/test.png"); //TODO: fix
 
 	bool running = true;
+	unsigned int lastTime = SDL_GetTicks();
 	while(running)
 	{
 		SDL_Event event;
@@ -62,6 +63,12 @@ int main(int argc, char **argv)
 
 		SDL_RenderClear(renderer);
 
+		int curTime = SDL_GetTicks();
+		if(curTime - lastTime > 50)
+		{
+			testWorld.update();
+			lastTime = curTime;
+		}
 		testWorld.render(renderer, 0, 0, 25);
 
 		SDL_RenderPresent(renderer);

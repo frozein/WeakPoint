@@ -15,22 +15,40 @@ struct Color
 
 struct Particle
 {
-	float vx, vy;
+	float xVel, yVel;
+	int lastX, lastY;
+	bool freeFall;
 	bool updated;
 
 	enum Type
 	{
-		Air,
-		Sand,
-		Water,
-		Dirt
+		AIR,
+		SAND,
+		WATER,
+		STONE
 	} type;
+
+	enum Flag
+	{
+		LIQUID,
+		SOLID,
+		EMPTY
+	} flag;
 };
 
 class World //TODO: infinite terrain
 {
 private:
 	SDL_Texture* tex;
+
+	Particle* get_p(int x, int y);
+	bool in_bounds(int x, int y);
+	void swap(int x1, int y1, int x2, int y2);
+
+	void update_sand (int x, int y);
+	void update_water(int x, int y);
+
+	void inner_sim_loop(int x);
 
 public:
 	int w, h;

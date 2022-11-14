@@ -28,7 +28,7 @@ void sim::Chunk::gen(int x, int y)
 	for(int i = 0; i < SIM_CHUNK_SIZE; i++)
 	for(int j = 0; j < SIM_CHUNK_SIZE; j++)
 	{
-		double noise = perlin.octave2D_01((j + x) * 0.05, (i + y) * 0.125, 4);
+		double noise = perlin.octave2D_01((j + x) * 0.02, (i + y) * 0.05, 4);
 
 		if(noise > 0.65)
 			p[j][i].type = Particle::Dirt;
@@ -44,7 +44,7 @@ void sim::Chunk::gen(int x, int y)
 		if(p[j][i].type == Particle::Air)
 			continue;
 
-		const int normalRad = 2;
+		const int normalRad = 6;
 		for(int i2 = i - normalRad; i2 <= i + normalRad; i2++)
 		for(int j2 = j - normalRad; j2 <= j + normalRad; j2++)
 		{
@@ -54,7 +54,7 @@ void sim::Chunk::gen(int x, int y)
 			bool solid;
 
 			if(i2 < 0 || i2 >= SIM_CHUNK_SIZE || j2 < 0 || j2 >= SIM_CHUNK_SIZE)
-				solid = perlin.octave2D_01((j2 + x) * 0.05, (i2 + y) * 0.125, 4) > 0.65;
+				solid = perlin.octave2D_01((j2 + x) * 0.02, (i2 + y) * 0.05, 4) > 0.65;
 			else
 				solid = p[j2][i2].type != Particle::Air;
 
@@ -68,7 +68,7 @@ void sim::Chunk::gen(int x, int y)
 			}
 		}
 
-		if(QM_vec2_dot(normal, normal) < 0.01f)
+		if(QM_vec2_dot(normal, normal) < 0.001f)
 			normal = {0.0f, 0.0f};
 		else
 			normal = QM_vec2_normalize(normal);
@@ -76,11 +76,12 @@ void sim::Chunk::gen(int x, int y)
 		p[j][i].vx = normal.x;
 		p[j][i].vy = normal.y;
 
-		float dot = QM_vec2_dot(normal, {0.0f, 1.0f});
-		if(dot > 0.9f)
-			p[j][i].type = Particle::Water;
-		else if(dot < -0.1f)
+		float dotX = QM_vec2_dot(normal, {1.0f, 0.0f});
+		float dotY = QM_vec2_dot(normal, {0.0f, 1.0f});
+		if(dotY < -0.1f)
 			p[j][i].type = Particle::Dirt;
+		else if(dotY > 0.1f && fabs(dotX) < 0.25f)
+			p[j][i].type = Particle::Water;
 		else
 			p[j][i].type = Particle::Sand;
 	}

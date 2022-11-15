@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include <chrono>
 #include <memory>
 #include <exception>
@@ -8,14 +9,16 @@
 #include <array>
 #include <vector>
 #include <algorithm>
-#include <string>
+
+//--- QuickMath ---//
+#include "quickmath.h"
 
 /*
  * FILE DESCRIPTION:
  * Includes globally relevant information.
  */
 
-#define DANIEL 1
+#define DANIEL 0
 
 extern bool running;
 struct ivec2;

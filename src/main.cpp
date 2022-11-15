@@ -5,8 +5,13 @@
 #include <SDL.h>
 
 #include "Scenes/GameScene.hpp" // Change depending on what the starting scene is.
+#include "quickmath.h"
 
 int main(int argc, char** argv) {
+
+	QMvec3 test1 = { 1, 1, 1 };
+	QMvec3 test2 = { 2, 2, 2 };
+	float t = QM_vec3_dot(test1, test2);
 
     //--- INITIALIZATION AND LOADING ---//
     try {

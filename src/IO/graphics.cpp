@@ -195,12 +195,29 @@ void graphics::load() {
 
     //--- LOAD TEXTURES ---//
 
+    #if DANIEL
     //- general -//
     graphics::load_texture(TEXTURE_MULTIPURPOSE_PIXEL, "../../assets/art/multipurpose_pixel.png");
     graphics::load_texture(TEXTURE_PLACEHOLDER, "../../assets/art/placeholder.png");
 
+    //- game -//
+    graphics::load_texture(TEXTURE_PLAYER, "../../assets/art/player.png");
+
     //--- LOAD FONTS ---//
     graphics::load_font(FONT_GAME, "../../assets/fonts/FFFFORWA.TTF");
+
+    #else
+    //- general -//
+    graphics::load_texture(TEXTURE_MULTIPURPOSE_PIXEL, "art/multipurpose_pixel.png");
+    graphics::load_texture(TEXTURE_PLACEHOLDER, "art/placeholder.png");
+
+    //- game -//
+    graphics::load_texture(TEXTURE_PLAYER, "art/player.png");
+
+    //--- LOAD FONTS ---//
+    graphics::load_font(FONT_GAME, "fonts/FFFFORWA.TTF");
+
+    #endif
 }
 
 //------------------------------------------------------------------------------------------------//

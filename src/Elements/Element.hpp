@@ -14,6 +14,9 @@ protected:
     std::vector< std::unique_ptr<Element> > children;
     float time;
 
+    // Returns true if the key argument is held down:
+    bool get_key_pressed(SDL_Scancode key);
+
 public:
     Element();
 

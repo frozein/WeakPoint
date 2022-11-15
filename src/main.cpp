@@ -46,8 +46,6 @@ int main(int argc, char** argv) {
     using clock = std::chrono::high_resolution_clock;
     clock::time_point currentTime = clock::now();
 
-    sim::World map = sim::World(graphics::get_renderer(), "../../assets/art/map.png");
-
     while (running) {
 
         try {
@@ -78,7 +76,6 @@ int main(int argc, char** argv) {
             //--- RENDER ---//
             graphics::clear_renderer();
             currentScene->render();
-            map.render(graphics::get_renderer(), 0, 0, 10);
             graphics::present_renderer();
 
         }

@@ -160,7 +160,13 @@ void graphics::load_texture(TextureIndex idx, const char* filePath) {
 
     // Convert temporary surface to a texture loaded in the textures array:
     textures[idx] = SDL_CreateTextureFromSurface(renderer, tempSurface);
+
+    #if !DANIEL
+
     SDL_FreeSurface(tempSurface);
+
+    #endif
+
     if (!textures[idx]) {
         std::string sdlErrMsg(SDL_GetError());
         throw std::ios_base::failure("Unable to convert surface to texture - " + sdlErrMsg);
@@ -201,6 +207,12 @@ void graphics::load() {
 //STRING FUNCTIONS:
 
 SDL_Texture* graphics::create_string_texture(std::string str, FontIndex font, int* w, int* h) {
+
+    #if DANIEL
+
+    return NULL;
+
+    #endif
 
     // Create temporary surface:
     SDL_Surface* tempSurface = TTF_RenderText_Blended_Wrapped(fonts[font], str.c_str(), { 255, 255, 255, 255 }, WINDOW_WIDTH);

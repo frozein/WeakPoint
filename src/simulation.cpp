@@ -1,5 +1,4 @@
 #include "simulation.hpp"
-#include "quickmath.h"
 #include "SDL_image.h"
 
 //---------------------------------------------------------------------------------//

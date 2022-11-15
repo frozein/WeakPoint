@@ -1,5 +1,5 @@
 all:
-	cd build; cmake ..; make; cd ..; cd assets; ../build/dronegame; cd ../
+	cd build; cmake ..; make; cd ..; cd assets; ../build/scarletgamejam; cd ../
 
 git:
 	git add .

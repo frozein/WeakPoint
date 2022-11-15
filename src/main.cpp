@@ -1,81 +1,95 @@
-#include <iostream>
-#include "SDL.h"
-#include "simulation.hpp"
+#include "globals.hpp"
+#include "IO/graphics.hpp"
+#include "IO/audio.hpp"
+#include "Scenes/Scene.hpp"
+#include <SDL.h>
 
-int main(int argc, char **argv)
-{
-	SDL_Window* window;
-	SDL_Renderer* renderer;
+#include "Scenes/GameScene.hpp" // Change depending on what the starting scene is.
 
-	//init main subsystems, window, and renderer:
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS) == 0)
-	{
-		window = SDL_CreateWindow("ScarletGameJam", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_RESIZABLE);
+int main(int argc, char** argv) {
 
-		if (window)
-		{
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    //--- INITIALIZATION AND LOADING ---//
+    try {
+        graphics::init();
+        graphics::load();
+        audio::init();
+        audio::load();
 
-			if (renderer)
-			{
-				SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-				SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
-				SDL_RenderSetLogicalSize(renderer, 3840, 2160);
-			}
-			else
-			{
-				std::cout << "SDL ERROR, UNABLE TO INITIALIZE RENDERER - " << SDL_GetError() << std::endl;
-				SDL_DestroyWindow(window);
-				return -1;
-			}
-		}
-		else
-		{
-			std::cout << "SDL ERROR, UNABLE TO CREATE WINDOW - " << SDL_GetError() << std::endl;
-			return -1;
-		}
-	}
-	else
-	{
-		std::cout << "SDL ERROR, UNABLE TO INTIALIZE SUBSYSTEMS - " << SDL_GetError() << std::endl;
-		return -1;
-	}
+        currentScene = std::make_unique<GameScene>();
+    }
+    catch (std::ios_base::failure& e) {
+        std::cerr << "I/O ERROR: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+    catch (std::out_of_range& e) {
+        std::cerr << "OUT OF RANGE ERROR: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+    catch (std::domain_error& e) {
+        std::cerr << "DOMAIN ERROR: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+    catch (...) {
+        std::cerr << "FATAL: Unexpected exception caught during I/O initialization and loading." << std::endl;
+        return EXIT_FAILURE;
+    }
 
-	float camX = 0.0f, camY = 0.0f;
-	sim::World testWorld = sim::World(renderer, "../../assets/test.png"); //TODO: fix
+    //--- MAIN LOOP ---//
+    SDL_Event e;
 
-	bool running = true;
-	unsigned int lastTime = SDL_GetTicks();
-	while(running)
-	{
-		SDL_Event event;
-		while(SDL_PollEvent(&event))
-		{
-			switch(event.type)
-			{
-			case SDL_QUIT:
-			{
-				running = false;
-				break;
-			}
-			}
-		}
+    using clock = std::chrono::high_resolution_clock;
+    clock::time_point currentTime = clock::now();
 
-		SDL_RenderClear(renderer);
+    while (running) {
 
-		int curTime = SDL_GetTicks();
-		if(curTime - lastTime > 50)
-		{
-			testWorld.update();
-			lastTime = curTime;
-		}
-		testWorld.render(renderer, 0, 0, 25);
+        try {
+            
+            //--- INPUT ---//
+            while (SDL_PollEvent(&e)) {
 
-		SDL_RenderPresent(renderer);
-	}
+                if (e.type == SDL_MOUSEMOTION) {
+                    mousePos.x = e.motion.x;
+                    mousePos.y = e.motion.y;
+                }
 
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
-	return 0;
+                if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE)
+                    running = false;
+
+                currentScene->handle_input(e);
+
+            }
+
+            //--- UPDATE ---//
+            clock::time_point newTime = clock::now();
+            clock::duration frameTime = newTime - currentTime;
+            float deltaTime = frameTime.count() / 1000000000.0;
+            currentTime = newTime;
+
+            currentScene->update(deltaTime);
+
+            //--- RENDER ---//
+            graphics::clear_renderer();
+            currentScene->render();
+            graphics::present_renderer();
+
+        }
+        catch (std::ios_base::failure& e) {
+            std::cerr << "I/O ERROR: " << e.what() << std::endl;
+            return EXIT_FAILURE;
+        }
+        catch (std::domain_error& e) {
+            std::cerr << "DOMAIN ERROR: " << e.what() << std::endl;
+            return EXIT_FAILURE;
+        }
+        catch (...) {
+            std::cerr << "FATAL: Unexpected exception caught during the game main loop." << std::endl;
+            return EXIT_FAILURE;
+        }
+    }
+
+    //--- DEINIT PROGRAM ---//
+    audio::deinit();
+    graphics::deinit();
+
+    return EXIT_SUCCESS;
 }

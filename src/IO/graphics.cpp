@@ -273,3 +273,8 @@ void graphics::render_texture(TextureAttributes txt) {
     SDL_SetTextureColorMod(txt.texture, 255, 255, 255);
     SDL_SetTextureAlphaMod(txt.texture, 255);
 }
+
+SDL_Renderer* graphics::get_renderer()
+{
+    return renderer;
+}

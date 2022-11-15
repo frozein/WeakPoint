@@ -175,4 +175,5 @@ namespace graphics {
 	 */
 	void render_texture(TextureAttributes texture);
 
+	SDL_Renderer* get_renderer();
 }

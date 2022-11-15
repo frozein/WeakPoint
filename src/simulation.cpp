@@ -1,5 +1,6 @@
 #include "simulation.hpp"
 #include "SDL_image.h"
+#include "globals.hpp"
 
 //---------------------------------------------------------------------------------//
 
@@ -16,6 +17,7 @@ sim::World::World(SDL_Renderer* renderer, const char* path)
 	this->h = map->h;
 	p = new Particle[w * h];
 	tex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, w, h);
+	SDL_SetTextureBlendMode(tex, SDL_BLENDMODE_BLEND);
 
 	SDL_LockSurface(map);
 
@@ -56,7 +58,12 @@ sim::World::World(SDL_Renderer* renderer, const char* path)
 	}
 
 	SDL_UnlockSurface(map);
-	//SDL_FreeSurface(map); //for some reason this causes a crash????
+
+	#if !DANIEL
+
+	SDL_FreeSurface(map); //for some reason this causes a crash????
+
+	#endif
 
 	srand(123456);
 }
@@ -113,7 +120,7 @@ void sim::World::render(SDL_Renderer* renderer, int camX, int camY, int renderSi
 		{
 		case Particle::AIR:
 		{
-			col = {};
+			col = {0, 0, 0, 0};
 			break;
 		}
 		case Particle::STONE:

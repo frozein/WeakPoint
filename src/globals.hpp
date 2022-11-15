@@ -7,6 +7,8 @@
 //--- Standard Template Libraries ---//
 #include <array>
 #include <vector>
+#include <algorithm>
+#include <string>
 
 /*
  * FILE DESCRIPTION:

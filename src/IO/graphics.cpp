@@ -190,11 +190,11 @@ void graphics::load() {
     //--- LOAD TEXTURES ---//
 
     //- general -//
-    graphics::load_texture(TEXTURE_MULTIPURPOSE_PIXEL, "art/multipurpose_pixel.png");
-    graphics::load_texture(TEXTURE_PLACEHOLDER, "art/placeholder.png");
+    graphics::load_texture(TEXTURE_MULTIPURPOSE_PIXEL, "../../assets/art/multipurpose_pixel.png");
+    graphics::load_texture(TEXTURE_PLACEHOLDER, "../../assets/art/placeholder.png");
 
     //--- LOAD FONTS ---//
-    graphics::load_font(FONT_GAME, "fonts/FFFFORWA.TTF");
+    graphics::load_font(FONT_GAME, "../../assets/fonts/FFFFORWA.TTF");
 }
 
 //------------------------------------------------------------------------------------------------//

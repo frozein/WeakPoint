@@ -12,14 +12,3 @@
 bool running = true;
 // Mouse position in SDL Units
 ivec2 mousePos = { 0, 0 };
-
-//------------------------------------------------------------------------------------------------//
-//VEC2 OPERATOR OVERLOADS:
-
-vec2 vec2::operator+(const vec2& other) {
-    return { this->x + other.x, this->y + other.y };
-}
-
-ivec2 ivec2::operator+(const ivec2& other) {
-    return { this->x + other.x, this->y + other.y };
-}

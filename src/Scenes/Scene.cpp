@@ -8,6 +8,11 @@
 // The current scene of the game.
 std::unique_ptr<Scene> currentScene;
 
+bool Scene::get_key_pressed(SDL_Scancode key) {
+    static const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
+    return keyboardState[key];
+}
+
 Scene::Scene() {
     time = 0.0;
 }

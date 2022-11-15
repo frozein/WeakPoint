@@ -95,7 +95,7 @@ extern "C"
 
 //if you wish to set your own function prefix or remove it entirely,
 //simply change this macro:
-#define QM_PREFIX(name) DN_##name
+#define QM_PREFIX(name) QM_##name
 
 //if you wish to not use any of the CRT functions, you must #define your
 //own versions of the below functions and #include the appropriate header
@@ -175,14 +175,6 @@ typedef union
 
 	#endif
 } QMquaternion;
-
-//typedefs:
-typedef QMvec2 DNvec2;
-typedef QMvec3 DNvec3;
-typedef QMvec4 DNvec4;
-typedef QMmat3 DNmat3;
-typedef QMmat4 DNmat4;
-typedef QMquaternion DNquaternion;
 
 //----------------------------------------------------------------------//
 //HELPER FUNCS:

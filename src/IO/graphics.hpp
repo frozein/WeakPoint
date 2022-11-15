@@ -26,7 +26,10 @@ enum TextureIndex : unsigned char {
 
     //--- GENERAL ---//
 	TEXTURE_MULTIPURPOSE_PIXEL,
-	TEXTURE_PLACEHOLDER
+	TEXTURE_PLACEHOLDER,
+
+	//--- GAME ---//
+	TEXTURE_PLAYER
 
 };
 

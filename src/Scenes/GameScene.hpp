@@ -6,7 +6,7 @@
 class GameScene : public Scene {
 
 private:
-    std::unique_ptr<Player> player;
+    std::shared_ptr<Player> playerPtr;
     sim::World* world;
 
 public:

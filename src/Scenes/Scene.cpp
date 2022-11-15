@@ -18,14 +18,14 @@ Scene::Scene() {
 }
 
 void Scene::handle_input(SDL_Event e) {
-    std::for_each(elements.begin(), elements.end(), [e](std::unique_ptr<Element>& element){ element->handle_input(e); });
+    std::for_each(elements.begin(), elements.end(), [e](std::shared_ptr<Element> element){ element->handle_input(e); });
 }
 
 void Scene::update(float dt) {
     time += dt;
-    std::for_each(elements.begin(), elements.end(), [dt](std::unique_ptr<Element>& element){ element->update(dt); });
+    std::for_each(elements.begin(), elements.end(), [dt](std::shared_ptr<Element> element){ element->update(dt); });
 }
 
 void Scene::render() {
-    std::for_each(elements.begin(), elements.end(), [](std::unique_ptr<Element>& element){ element->render(); });
+    std::for_each(elements.begin(), elements.end(), [](std::shared_ptr<Element> element){ element->render(); });
 }

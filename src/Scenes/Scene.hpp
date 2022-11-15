@@ -17,7 +17,7 @@ extern std::unique_ptr<Scene> currentScene;
 class Scene {
 
 protected:
-    std::vector< std::unique_ptr<Element> > elements;
+    std::vector< std::shared_ptr<Element> > elements;
     float time;
 
     // Returns true if the key argument is held down:

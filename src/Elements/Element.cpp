@@ -10,14 +10,14 @@ Element::Element() {
 }
 
 void Element::handle_input(SDL_Event e) {
-    std::for_each(children.begin(), children.end(), [e](std::unique_ptr<Element>& child){ child->handle_input(e); });
+    std::for_each(children.begin(), children.end(), [e](std::shared_ptr<Element> child){ child->handle_input(e); });
 }
 
 void Element::update(float dt) {
     time += dt;
-    std::for_each(children.begin(), children.end(), [dt](std::unique_ptr<Element>& child){ child->update(dt); });
+    std::for_each(children.begin(), children.end(), [dt](std::shared_ptr<Element> child){ child->update(dt); });
 }
 
 void Element::render() {
-    std::for_each(children.begin(), children.end(), [](std::unique_ptr<Element>& child){ child->render(); });
+    std::for_each(children.begin(), children.end(), [](std::shared_ptr<Element> child){ child->render(); });
 }

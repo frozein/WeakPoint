@@ -26,7 +26,8 @@ Player::Player(float initX, float initY, std::vector< std::shared_ptr<Platform> 
 void Player::update(float dt) {
 
     //--- HANDLE INPUT ---//
-    // This for some reason works better here than the handle input function lol
+    // This for some reason works better here than in the handle input function lol
+    // Prob bc this function is guaranteed run every frame but handle input is not
 
     // horizontal movement
     if (get_key_down(SDL_SCANCODE_A) && get_key_down(SDL_SCANCODE_D))

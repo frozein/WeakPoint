@@ -1,5 +1,6 @@
 #pragma once
 #include "Element.hpp"
+#include "Elements/Platform.hpp"
 
 /*
  * FILE DESCRIPTION:
@@ -19,22 +20,25 @@
 class Player : public Element {
 
 private:
-    bool isJumping;
+    std::vector<SDL_Rect> platforms;
 
-    QMvec2 playerPos;
+    bool applyGravity;
+
     QMvec2 playerVel;
 
     // Returns true if the key argument is held down:
     bool get_key_down(SDL_Scancode key);
 
 public:
+    QMvec2 playerPos;
+
     TextureAttributes playerAttr;
 
     /* Create a player
      * @param initX The initial x-position of the player.
      * @param initY The initial y-position of the player.
      */
-    Player(float initX, float initY);
+    Player(float initX, float initY, std::vector< std::shared_ptr<Platform> > platformPtrs);
 
     void handle_input(SDL_Event e);
     void update(float dt);

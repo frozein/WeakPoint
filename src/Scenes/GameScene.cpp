@@ -1,7 +1,8 @@
 #include "GameScene.hpp"
 
 GameScene::GameScene() {
-    platformPtrs.push_back(std::make_shared<Platform>(500, WINDOW_HEIGHT - 1000, 500, 500));
+    platformPtrs.push_back(std::make_shared<Platform>(500, WINDOW_HEIGHT - PLAYER_H - 800, 500, 400));
+    platformPtrs.push_back(std::make_shared<Platform>(3000, WINDOW_HEIGHT - 400, 500, 200));
     // add platforms here
 
     playerPtr = std::make_shared<Player>(WINDOW_WIDTH / 2, WINDOW_HEIGHT - PLAYER_H, platformPtrs);

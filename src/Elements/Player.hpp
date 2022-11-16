@@ -22,7 +22,7 @@ class Player : public Element {
 private:
     std::vector<SDL_Rect> platforms;
 
-    bool applyGravity;
+    bool canJump;
 
     QMvec2 playerVel;
 

@@ -15,7 +15,7 @@ Player::Player(float initX, float initY, std::vector< std::shared_ptr<Platform> 
         platforms.push_back(platformPtr->box);
     });
 
-    applyGravity = false;
+    canJump = true;
 
     playerVel = { 0.0, 0.0 };
     playerPos.x = initX;
@@ -44,9 +44,9 @@ void Player::update(float dt) {
         playerVel.x = 0;
 
     // vertical movement
-    if ((get_key_down(SDL_SCANCODE_W) || get_key_down(SDL_SCANCODE_SPACE) || get_key_down(SDL_SCANCODE_UP)) && !applyGravity) {
+    if ((get_key_down(SDL_SCANCODE_W) || get_key_down(SDL_SCANCODE_SPACE) || get_key_down(SDL_SCANCODE_UP)) && canJump) {
         playerVel.y = -JUMP_IMPULSE;
-        applyGravity = true;
+        canJump = false;
     }
 
     //--- detect collision ---//
@@ -59,13 +59,13 @@ void Player::update(float dt) {
             break;
         }
 
-    static const int TOLERANCE = 50;
+    static const int TOLERANCE = 150;
 
     //vertical
     playerVel.y += GRAVITY * dt;
 
     if (playerPos.y >= WINDOW_HEIGHT - PLAYER_H && playerVel.y > 0) {
-        applyGravity = false;
+        canJump = true;
         playerVel.y = 0;
         playerPos.y = WINDOW_HEIGHT - PLAYER_H;
     }
@@ -73,12 +73,23 @@ void Player::update(float dt) {
     if (collision.y != 0) {
 
         if (playerPos.y + PLAYER_H >= collision.y && playerPos.y + PLAYER_H <= collision.y + TOLERANCE && playerVel.y > 0) {
-            applyGravity = false;
+            canJump = true;
             playerVel.y = 0;
             playerPos.y = collision.y - PLAYER_H;
         }
 
+        if (playerPos.y <= collision.y + collision.h && playerPos.y >= collision.y + collision.h - TOLERANCE &&
+            playerPos.x + PLAYER_W >= collision.x + TOLERANCE && playerPos.x <= collision.x + collision.h - TOLERANCE) {
+
+            playerPos.y = collision.y + collision.h + 1;
+            playerVel.y = 0;
+        }
+
     }
+
+    // fix double jump bug
+    if (collision.y == 0 && playerPos.y < WINDOW_HEIGHT - PLAYER_H) // player is in the air
+        canJump = false;
 
     //horizontal
     if (collision.x != 0 && collision.y != playerPos.y + PLAYER_H) {

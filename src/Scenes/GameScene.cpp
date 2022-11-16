@@ -1,8 +1,10 @@
 #include "GameScene.hpp"
 
 GameScene::GameScene() {
-    platformPtrs.push_back(std::make_shared<Platform>(WINDOW_WIDTH - 1000, WINDOW_HEIGHT - 300, 400, 200));
-    playerPtr = std::make_shared<Player>(WINDOW_WIDTH / 2, WINDOW_HEIGHT - PLAYER_H / 2, platformPtrs);
+    platformPtrs.push_back(std::make_shared<Platform>(500, WINDOW_HEIGHT - 500, 500, 250));
+    // add platforms here
+
+    playerPtr = std::make_shared<Player>(WINDOW_WIDTH / 2, WINDOW_HEIGHT - PLAYER_H, platformPtrs);
 
     elements.push_back(playerPtr);
     elements.insert(elements.end(), platformPtrs.begin(), platformPtrs.end());

@@ -20,22 +20,15 @@ Player::Player(float initX, float initY, std::vector< std::shared_ptr<Platform> 
     playerVel = { 0.0, 0.0 };
     playerPos.x = initX;
     playerPos.y = initY;
-    playerAttr = TextureAttributes(TEXTURE_PLAYER, graphics::SRC_NULL, { (int)playerPos.x, (int)playerPos.y, PLAYER_W, PLAYER_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, true, 1);
+    playerAttr = TextureAttributes(TEXTURE_PLAYER, graphics::SRC_NULL, { (int)playerPos.x, (int)playerPos.y, PLAYER_W, PLAYER_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
 }
 
-/*void Player::resolve_collision(std::shared_ptr<Platform> platformPtr) {
-    static const int TOLERANCE = 100;
+void Player::update(float dt) {
 
-    if (playerPos.x + PLAYER_W / 2 < platformPtr->box.x + TOLERANCE)
-        playerPos.x = platformPtr->box.x - PLAYER_W / 2;
-    if (playerPos.x - PLAYER_W / 2 > platformPtr->box.x + platformPtr->box.h - TOLERANCE) {
-        playerPos.x = platformPtr->box.x + platformPtr->box.h + 250;
-        std::cout << "up\n";
-    }
-}*/
+    //--- HANDLE INPUT ---//
+    // This for some reason works better here than the handle input function lol
 
-void Player::handle_input(SDL_Event e) {
-    //--- HORIZONTAL MOVEMENT ---//
+    // horizontal movement
     if (get_key_down(SDL_SCANCODE_A) && get_key_down(SDL_SCANCODE_D))
         playerVel.x = 0;
     else if (get_key_down(SDL_SCANCODE_A)) {
@@ -49,53 +42,57 @@ void Player::handle_input(SDL_Event e) {
     else
         playerVel.x = 0;
 
-    //--- VERTICAL MOVEMENT ---//
+    // vertical movement
     if ((get_key_down(SDL_SCANCODE_W) || get_key_down(SDL_SCANCODE_SPACE) || get_key_down(SDL_SCANCODE_UP)) && !applyGravity) {
         playerVel.y = -JUMP_IMPULSE;
         applyGravity = true;
     }
-}
 
-void Player::update(float dt) {
     //--- detect collision ---//
     SDL_Rect collision = { 0, 0, 0, 0 };
     for (SDL_Rect platform : platforms)
-        if (playerPos.x + PLAYER_W / 2 >= platform.x && playerPos.x - PLAYER_W / 2 <= platform.x + platform.w &&
-            playerPos.y + PLAYER_H / 2 >= platform.y && playerPos.y - PLAYER_H / 2 <= platform.y + platform.h) {
+        if (playerPos.x + PLAYER_W >= platform.x && playerPos.x <= platform.x + platform.w &&
+            playerPos.y + PLAYER_H >= platform.y && playerPos.y <= platform.y + platform.h) {
 
             collision = platform;
             break;
         }
 
-    //horizontal
-    if (collision.x != 0 && collision.y != playerPos.y + PLAYER_H / 2 &&                    // There is a collision:
-       ((playerPos.x + PLAYER_W / 2 >= collision.x && playerVel.x > 0) ||                       // Collision while moving right
-        (playerPos.x - PLAYER_W / 2 >= collision.x + collision.h && playerVel.x < 0))) {        // Collision while moving left
-
-        playerVel.x = 0;
-    }
+    static const int TOLERANCE = 50;
 
     //vertical
     playerVel.y += GRAVITY * dt;
 
-    if (playerPos.y >= WINDOW_HEIGHT - PLAYER_H / 2 && playerVel.y > 0) {
+    if (playerPos.y >= WINDOW_HEIGHT - PLAYER_H && playerVel.y > 0) {
         applyGravity = false;
         playerVel.y = 0;
-        playerPos.y = WINDOW_HEIGHT - PLAYER_H / 2;
+        playerPos.y = WINDOW_HEIGHT - PLAYER_H;
     }
 
-    if (collision.y != 0 &&
-        (playerPos.y + PLAYER_H / 2 >= collision.y && playerVel.y > 0)) {
+    if (collision.y != 0) {
 
-        applyGravity = false;
-        playerVel.y = 0;
-        playerPos.y = collision.y - PLAYER_H / 2;
+        if (playerPos.y + PLAYER_H >= collision.y && playerPos.y + PLAYER_H <= collision.y + TOLERANCE && playerVel.y > 0) {
+            applyGravity = false;
+            playerVel.y = 0;
+            playerPos.y = collision.y - PLAYER_H;
+        }
+
     }
 
-    //--- update vertical movement ---//
-    /*if (applyGravity) {
-        playerVel.y += GRAVITY * dt;
-    }*/
+    //horizontal
+    if (collision.x != 0 && collision.y != playerPos.y + PLAYER_H) {
+
+        if (playerPos.x + PLAYER_W >= collision.x && playerPos.x + PLAYER_W <= collision.x + TOLERANCE && playerVel.x > 0) {
+            playerPos.x = collision.x - PLAYER_W;
+            playerVel.x = 0;
+        }
+
+        if (playerPos.x <= collision.x + collision.w && playerPos.x >= collision.x + collision.w - TOLERANCE && playerVel.x < 0) {
+            playerPos.x = collision.x + collision.w;
+            playerVel.x = 0;
+        }
+
+    }
 
     //--- update horizontal movement ---//
     playerPos.x += playerVel.x * dt;

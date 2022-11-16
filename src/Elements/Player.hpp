@@ -40,7 +40,6 @@ public:
      */
     Player(float initX, float initY, std::vector< std::shared_ptr<Platform> > platformPtrs);
 
-    void handle_input(SDL_Event e);
     void update(float dt);
     void render();
 

@@ -43,6 +43,7 @@ sim::World::World(SDL_Renderer* renderer, const char* path)
 		{
 			p[i].type = Particle::STONE;
 			p[i].flag = Particle::SOLID;
+			p[i].freeFall = false;
 		}
 		else if(pixels[i].r == 0 && pixels[i].g == 0 && pixels[i].b == 255)
 		{

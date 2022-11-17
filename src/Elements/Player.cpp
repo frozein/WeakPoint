@@ -67,12 +67,11 @@ void Player::resolve_collision(int worldX, int worldY) {
             playerVel.x = 0;
         }
 
-        std::cout << (playerPos.x >= collision.x) << "\n";
-
         if (playerPos.x <= collision.x + collision.w && playerPos.x >= collision.x && playerVel.x < 0) {
             playerPos.x = collision.x + collision.w;
             playerVel.x = 0;
         }
+        
     }
 }
 
@@ -112,6 +111,7 @@ void Player::update(float dt) {
         playerPos.y = WINDOW_HEIGHT - PLAYER_H;
     }
 
+    //--- check for collisions ---//
     int xMin = std::max((int)floor(playerPos.x / PARTICLE_W) - 1, 0);
     int xMax = std::min((int)ceil((playerPos.x + PLAYER_W) / PARTICLE_W) + 1, WORLD_W - 1);
     int yMin = std::max((int)floor(playerPos.y / PARTICLE_H) - 1, 0);

@@ -1,11 +1,14 @@
 #pragma once
 #include "Element.hpp"
-#include "Elements/Platform.hpp"
+#include "../simulation.hpp"
 
 /*
  * FILE DESCRIPTION:
  * Includes declarations for the Player class and its methods.
  */
+
+#define WORLD_W 380
+#define WORLD_H 216
 
 //--- Player Settings ---//
 
@@ -20,7 +23,7 @@
 class Player : public Element {
 
 private:
-    std::vector<SDL_Rect> platforms;
+    sim::World* world;
 
     bool canJump;
 
@@ -38,7 +41,9 @@ public:
      * @param initX The initial x-position of the player.
      * @param initY The initial y-position of the player.
      */
-    Player(float initX, float initY, std::vector< std::shared_ptr<Platform> > platformPtrs);
+    Player(float initX, float initY, sim::World* _world);
+
+    void resolve_collision(int worldX, int worldY);
 
     void update(float dt);
     void render();

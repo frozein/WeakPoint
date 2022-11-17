@@ -41,7 +41,6 @@ class World //TODO: infinite terrain
 private:
 	SDL_Texture* tex;
 
-	Particle* get_p(int x, int y);
 	bool in_bounds(int x, int y);
 	void swap(int x1, int y1, int x2, int y2);
 
@@ -56,6 +55,8 @@ public:
 
 	World(SDL_Renderer* renderer, const char* path);
 	~World();
+
+	Particle* get_p(int x, int y);
 
 	void update();
 	void render(SDL_Renderer* renderer, int camX, int camY, int renderSize);

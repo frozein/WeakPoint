@@ -7,7 +7,6 @@
 class GameScene : public Scene {
 
 private:
-    std::vector< std::shared_ptr<Platform> > platformPtrs;
     std::shared_ptr<Player> playerPtr;
     sim::World* world;
 

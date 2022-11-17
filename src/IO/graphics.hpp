@@ -15,7 +15,7 @@
 #define WINDOW_HEIGHT 2160
 
 // The designated color for letterboxing. If the physical window aspect ratio does not equal the SDL program window aspect ratio, letterboxing is used to cover the gaps.
-#define LETTERBOX_COLOR { 50, 50, 60, 255 }
+#define LETTERBOX_COLOR { 0, 0, 0, 255 } // 50, 50, 60
 
 //------------------------------------------------------------------------------------------------//
 //GRAPHICS DATA TYPES:

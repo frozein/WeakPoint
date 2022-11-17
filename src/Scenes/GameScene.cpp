@@ -1,8 +1,14 @@
 #include "GameScene.hpp"
 
 GameScene::GameScene() {
-    playerPtr = std::make_shared<Player>(WINDOW_WIDTH / 2, WINDOW_HEIGHT - PLAYER_H / 2);
+    platformPtrs.push_back(std::make_shared<Platform>(500, WINDOW_HEIGHT - PLAYER_H - 800, 500, 400));
+    platformPtrs.push_back(std::make_shared<Platform>(3000, WINDOW_HEIGHT - 400, 500, 200));
+    // add platforms here
+
+    playerPtr = std::make_shared<Player>(WINDOW_WIDTH / 2, WINDOW_HEIGHT - PLAYER_H, platformPtrs);
+
     elements.push_back(playerPtr);
+    elements.insert(elements.end(), platformPtrs.begin(), platformPtrs.end());
 
     #if DANIEL
 
@@ -32,7 +38,7 @@ void GameScene::update(float dt)
 
 void GameScene::render()
 {
-    world->render(graphics::get_renderer(), 0, 0, 10);
+    //world->render(graphics::get_renderer(), 0, 0, 10);
 
     Scene::render();
 }

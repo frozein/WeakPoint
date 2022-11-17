@@ -79,7 +79,7 @@ void Player::update(float dt) {
         }
 
         if (playerPos.y <= collision.y + collision.h && playerPos.y >= collision.y + collision.h - TOLERANCE &&
-            playerPos.x + PLAYER_W >= collision.x + TOLERANCE && playerPos.x <= collision.x + collision.h - TOLERANCE) {
+            playerPos.x + PLAYER_W > collision.x && playerPos.x < collision.x + collision.w) {
 
             playerPos.y = collision.y + collision.h + 1;
             playerVel.y = 0;

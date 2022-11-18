@@ -42,6 +42,7 @@ void Player::resolve_collision(int worldX, int worldY) {
 
         if (playerPos.y + PLAYER_H >= collision.y && playerPos.y + PLAYER_H <= collision.y + collision.h && playerVel.y > 0) {
             canJump = true;
+            playerVel.y = 0;
             playerPos.y = collision.y - PLAYER_H;
         }
 
@@ -49,9 +50,8 @@ void Player::resolve_collision(int worldX, int worldY) {
             playerPos.x + PLAYER_W > collision.x && playerPos.x < collision.x + collision.w) {
 
             playerPos.y = collision.y + collision.h + 1;
+            playerVel.y = 0;
         }
-
-        playerVel.y = 0;
 
     }
 
@@ -62,14 +62,32 @@ void Player::resolve_collision(int worldX, int worldY) {
     //--- horizontal ---//
     if (collision.x != 0 && collision.y != playerPos.y + PLAYER_H) { // there is a collision on the x-axis
 
-        if (playerPos.x + PLAYER_W >= collision.x && playerPos.x + PLAYER_W <= collision.x + collision.w && playerVel.x > 0) // collision from the left
-            playerPos.x = collision.x - PLAYER_W;
+        if (playerPos.x + PLAYER_W >= collision.x && playerPos.x + PLAYER_W <= collision.x + collision.w && playerVel.x > 0) { // collision from the left
 
-        if (playerPos.x <= collision.x + collision.w && playerPos.x >= collision.x && playerVel.x < 0) // collision from the right
-            playerPos.x = collision.x + collision.w;
+            if (collision.y + collision.h >= playerPos.y + PLAYER_H) { // can move up
+                playerPos.x += 1;
+                playerPos.y = collision.y - PLAYER_H - 2 * PARTICLE_H; //idk why it's 2*, 1* won't work
+            }
+            else {
+                playerPos.x = collision.x - PLAYER_W;
+                playerVel.x = 0;
+            }
         
-        playerVel.x = 0;
+        }
 
+        if (playerPos.x <= collision.x + collision.w && playerPos.x >= collision.x && playerVel.x < 0) { // collision from the right
+
+            if (collision.y + collision.h >= playerPos.y + PLAYER_H) { // can move up
+                playerPos.x -= 1;
+                playerPos.y = collision.y - PLAYER_H - PARTICLE_H;
+            }
+            else {
+                playerPos.x = collision.x + collision.w;
+                playerVel.x = 0;
+            }
+
+        }
+        
     }
 }
 

@@ -17,8 +17,8 @@
 
 #define SPEED 1000
 
-#define JUMP_IMPULSE 3000
-#define GRAVITY 10000
+#define JUMP_IMPULSE 1500
+#define GRAVITY 5000
 
 class Player : public Element {
 

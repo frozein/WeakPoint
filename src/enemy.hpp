@@ -7,7 +7,7 @@ private:
 	float angle;
 	unsigned int spawnTime;
 	unsigned int dropTime;
-	const unsigned int ANIM_TIME = 500;
+	const unsigned int ANIM_TIME = 5000;
 
 public:
 	Enemy(QMvec2 p);

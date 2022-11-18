@@ -12,13 +12,13 @@
 
 //--- Player Settings ---//
 
-#define PLAYER_W 200
-#define PLAYER_H 320
+#define PLAYER_W 100
+#define PLAYER_H 160
 
-#define SPEED 1500
+#define SPEED 1000
 
-#define JUMP_IMPULSE 4500
-#define GRAVITY 18000
+#define JUMP_IMPULSE 1500
+#define GRAVITY 5000
 
 class Player : public Element {
 

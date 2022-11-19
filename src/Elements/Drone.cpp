@@ -27,7 +27,23 @@ void Drone::fire(float speed) {
     bullets.push_back(newBullet);
 }
 
+const int FORGIVENESS = 15;
+
 void Drone::update(float dt) {
+    SDL_Rect playerHitbox = playerPtr->playerAttr.dstRect;
+    if (playerHitbox.x + PLAYER_W >= pos.x && playerHitbox.x <= pos.x + DRONE_W &&
+        playerHitbox.y + PLAYER_H >= pos.y && playerHitbox.y <= pos.y + DRONE_H &&
+        playerPtr->dash.dashTime > 0.0f)
+    {
+        int dash = (int)playerPtr->dash.angle % 180;
+        int weak = (int)weakSpot % 180;
+        if (abs(dash - weak) <= FORGIVENESS || abs(dash - weak) >= 180 - FORGIVENESS) { // drone has been destroyed
+            active = false;
+            playerPtr->dash.reset_dash(true);
+            return;
+        }
+    }
+
     for (int i = 0; i < bullets.size(); i++) {
         bullets.at(i).pos.x += bullets.at(i).vel.x * dt;
         bullets.at(i).pos.y += bullets.at(i).vel.y * dt;

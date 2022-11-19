@@ -27,6 +27,10 @@ GameScene::~GameScene()
 
 void GameScene::update(float dt)
 {
+    for (int i = 0; i < elements.size(); i++)
+        if (!elements.at(i)->active)
+            elements.erase(elements.begin() + i);
+
     Scene::update(dt);
 }
 

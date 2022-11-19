@@ -5,7 +5,7 @@
  * Includes definitions for the methods in the Element class.
  */
 
-Element::Element() {
+Element::Element() : active(true) {
     time = 0.0;
 }
 

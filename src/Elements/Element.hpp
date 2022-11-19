@@ -15,6 +15,8 @@ protected:
     float time;
 
 public:
+    bool active;
+
     Element();
 
     // Use to handle the input of an element's children.

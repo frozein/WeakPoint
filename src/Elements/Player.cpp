@@ -9,26 +9,27 @@
 //DASH METHODS:
 
 void Dash::init_dash(float _angle) {
-    isDashing = true;
     dashTime = DASH_TIME;
-    resetTimer = 0.0f;
+    cooldown = DASH_RESET;
     angle = _angle;
 }
 
-void Dash::reset_dash() {
-    isDashing = false;
-    dashTime = 0.0f;
-    resetTimer = DASH_RESET;
-    angle = 0.0f;
+void Dash::reset_dash(bool gotReset) {
+    if (gotReset) {
+        cooldown = 0.0f;
+    }
+    else if (cooldown != 0.0f) {
+        dashTime = 0.0f;
+        cooldown = DASH_RESET;
+    }
 }
 
 //----------------------------------------------------------------------//
 //PLAYER METHODS:
 
 Player::Player(float _x, float _y) : w(false), a(false), s(false), d(false) {
-    dash.isDashing = false;
     dash.dashTime = 0.0f;
-    dash.resetTimer = 0.0f;
+    dash.cooldown = 0.0f;
 
     pos = { _x, _y };
     vel = { 0, 0 };
@@ -46,7 +47,7 @@ void Player::handle_input(SDL_Event e) {
             case SDLK_s: s = true; break;
             case SDLK_d: d = true; break;
             case SDLK_SPACE:
-                if (!dash.isDashing && dash.resetTimer <= 0) {
+                if (dash.cooldown <= 0.0f) {
                     // initialize dash:
                     QMvec2 cen = { pos.x + PLAYER_W / 2, pos.y + PLAYER_H / 2 };
                     QMvec2 mouse = { (float)mousePos.x, (float)mousePos.y };
@@ -81,19 +82,18 @@ void Player::handle_input(SDL_Event e) {
 }
 
 void Player::update(float dt) {
+    std::cout << dash.cooldown << "\n";
     // if dashing:
-    if (dash.isDashing) {
-
-        // dash vel is calculated in handle input.
-        pos.x += vel.x * dt;
+    if (dash.dashTime > 0.0f) {
+        pos.x += vel.x * dt; // dash vel is calculated in handle input.
         pos.y += vel.y * dt;
         playerAttr.dstRect.x = (int)pos.x;
-        playerAttr.dstRect.y = (int)pos.y;
+        playerAttr.dstRect.y = (int)pos.y; 
 
         // update dash:
         dash.dashTime -= dt;
         if (dash.dashTime < 0.0f) {
-            dash.reset_dash();
+            dash.reset_dash(false);
             vel = QM_vec2_normalize(vel);
             vel = QM_vec2_scale(vel, PLAYER_VEL);
         }
@@ -138,8 +138,8 @@ void Player::update(float dt) {
     playerAttr.angle = find_angle(cen, mouse) - 90.0f;
 
     // update dashing:
-    if (dash.resetTimer > 0.0f)
-        dash.resetTimer -= dt;
+    if (dash.cooldown > 0.0f)
+        dash.cooldown -= dt;
 }
 
 void Player::render() {

@@ -16,13 +16,12 @@
 #define DASH_VEL 2000
 
 struct Dash {
-    bool isDashing;
-    float resetTimer;
+    float cooldown;
     float dashTime;
     float angle;
 
     void init_dash(float _angle);
-    void reset_dash();
+    void reset_dash(bool gotReset);
 };
 
 //--- Player Settings ---//
@@ -38,12 +37,12 @@ class Player : public Element {
 private:
     bool w, a, s, d;
 
-    Dash dash;
-
     QMvec2 pos;
     QMvec2 vel;
 
 public:
+    Dash dash;
+
     TextureAttributes playerAttr;
 
     Player(float _x, float _y);

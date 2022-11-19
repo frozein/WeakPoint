@@ -40,6 +40,19 @@ void Player::handle_input(SDL_Event e) {
     }
 }
 
+float Player::find_angle() {
+    if (mousePos.x == pos.x) {
+        if (mousePos.y >= pos.y)    return 0.0f;
+        else                        return 180.0f;
+    }
+
+    QMvec2 delta = { mousePos.x - pos.x, mousePos.y - pos.y };
+    delta = QM_vec2_normalize(delta);
+    float angle = QM_rad_to_deg(acos(delta.x));
+    if (delta.y > 0) angle *= -1;
+    return angle;
+}
+
 void Player::update(float dt) {
     // find velocity player should be:
     vec2 findVel = { 0, 0 };
@@ -72,6 +85,8 @@ void Player::update(float dt) {
     pos.y += vel.y * dt;
     playerAttr.dstRect.x = (int)pos.x;
     playerAttr.dstRect.y = (int)pos.y;
+
+    playerAttr.angle = find_angle();
 }
 
 void Player::render() {

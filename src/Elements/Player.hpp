@@ -19,8 +19,8 @@ class Player : public Element {
 private:
     bool w, a, s, d;
 
-    vec2 pos;
-    vec2 vel;
+    QMvec2 pos;
+    QMvec2 vel;
 
 public:
     TextureAttributes playerAttr;
@@ -30,7 +30,7 @@ public:
     void handle_input(SDL_Event e);
 
     float find_angle();
-    void update(float dt);
+    void update(float dt);    
     
     void render();
 };

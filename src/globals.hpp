@@ -32,6 +32,8 @@ struct vec2 {
     float x;
     float y;
 
+    void normalize();
+
     /* Add functionality for two float vectors.
      * @param other Other float vector to add.
      * @return Sum of the current vector and the argument vector.

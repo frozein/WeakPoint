@@ -1,14 +1,10 @@
 #pragma once
 #include "Element.hpp"
-#include "../simulation.hpp"
 
 /*
  * FILE DESCRIPTION:
  * Includes declarations for the Player class and its methods.
  */
-
-#define WORLD_W 380
-#define WORLD_H 216
 
 //--- Player Settings ---//
 
@@ -23,8 +19,6 @@
 class Player : public Element {
 
 private:
-    sim::World* world;
-
     bool canJump;
 
     QMvec2 playerVel;
@@ -41,7 +35,7 @@ public:
      * @param initX The initial x-position of the player.
      * @param initY The initial y-position of the player.
      */
-    Player(float initX, float initY, sim::World* _world);
+    Player(float initX, float initY);
 
     void resolve_collision(int worldX, int worldY);
 

@@ -2,7 +2,6 @@
 #include "IO/graphics.hpp"
 #include "IO/audio.hpp"
 #include "Scenes/Scene.hpp"
-#include "simulation.hpp"
 #include <SDL.h>
 
 #include "Scenes/GameScene.hpp" // Change depending on what the starting scene is.

@@ -10,6 +10,8 @@
 int main(int argc, char** argv) {
 
     //--- INITIALIZATION AND LOADING ---//
+    srand(time(NULL));
+
     try {
         graphics::init();
         graphics::load();

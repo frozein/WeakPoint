@@ -5,11 +5,15 @@
  * Includes definitions for the methods in Drone.cpp.
  */
 
+//----------------------------------------------------------------------//
+//BASE DRONE METHODS:
+
 Drone::Drone(std::shared_ptr<Player> _playerPtr, float x, float y) {
     playerPtr = _playerPtr;
     pos = { x, y };
     cen = { pos.x + DRONE_W / 2, pos.y + DRONE_H / 2 };
     reloadTimer = DRONE_FIRERATE;
+    weakSpot = (float)(rand() % 180);
     droneAttr = TextureAttributes(TEXTURE_DRONE_GREEN, graphics::SRC_NULL, { (int)pos.x, (int)pos.y, DRONE_W, DRONE_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
 }
 
@@ -25,12 +29,6 @@ void Drone::fire() {
 }
 
 void Drone::update(float dt) {
-    reloadTimer -= dt;
-    if (reloadTimer <= 0.0f) {
-        fire();
-        reloadTimer = DRONE_FIRERATE;
-    }
-
     for (int i = 0; i < bullets.size(); i++) {
         bullets.at(i).pos.x += bullets.at(i).vel.x * dt;
         bullets.at(i).pos.y += bullets.at(i).vel.y * dt;
@@ -51,5 +49,20 @@ void Drone::render() {
     });
 
     graphics::render_texture(droneAttr);
-    graphics::render_texture(TextureAttributes(TEXTURE_LINE, graphics::SRC_NULL, { (int)cen.x, (int)cen.y, 50, 5 }, droneAttr.angle + 90.0f, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, true, 1));
+    graphics::render_texture(TextureAttributes(TEXTURE_LINE, graphics::SRC_NULL, { (int)cen.x, (int)cen.y, 50, 5 }, weakSpot, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, true, 1));
+}
+
+//----------------------------------------------------------------------//
+//GREEN DRONE METHODS:
+
+GreenDrone::GreenDrone(std::shared_ptr<Player> _playerPtr, float x, float y) : Drone(_playerPtr, x, y), reloadTimer(DRONE_FIRERATE) { }
+
+void GreenDrone::update(float dt) {
+    reloadTimer -= dt;
+    if (reloadTimer <= 0.0f) {
+        Drone::fire();
+        reloadTimer = DRONE_FIRERATE;
+    }
+
+    Drone::update(dt);
 }

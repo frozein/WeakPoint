@@ -5,7 +5,7 @@ GameScene::GameScene() {
     playerPtr = std::make_shared<Player>(500, 500);
     elements.push_back(playerPtr);
 
-    dronePtrs.push_back(std::make_shared<Drone>(playerPtr, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
+    dronePtrs.push_back(std::make_shared<GreenDrone>(playerPtr, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
     elements.insert(elements.end(), dronePtrs.begin(), dronePtrs.end());
 
     //temp map just for testing:

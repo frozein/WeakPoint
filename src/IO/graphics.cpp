@@ -202,11 +202,11 @@ void graphics::load() {
     graphics::load_texture(TEXTURE_PLAYER, "../../assets/art/player.png");
     graphics::load_texture(TEXTURE_TILESET, "../../assets/art/tileset.png");
 
-    graphics::load_texture(TEXTURE_BULLET, "../../art/bullet.png");
-    graphics::load_texture(TEXTURE_DRONE_GREEN, "../../art/droneGreen.png");
-    graphics::load_texture(TEXTURE_DRONE_PURPLE, "../../art/dronePurple.png");
-    graphics::load_texture(TEXTURE_DRONE_RED, "../../art/droneRed.png");
-    graphics::load_texture(TEXTURE_LINE, "../../art/line.png");
+    graphics::load_texture(TEXTURE_BULLET, "../../assets/art/bullet.png");
+    graphics::load_texture(TEXTURE_DRONE_GREEN, "../../assets/art/droneGreen.png");
+    graphics::load_texture(TEXTURE_DRONE_PURPLE, "../../assets/art/dronePurple.png");
+    graphics::load_texture(TEXTURE_DRONE_RED, "../../assets/art/droneRed.png");
+    graphics::load_texture(TEXTURE_LINE, "../../assets/art/line.png");
 
     //--- LOAD FONTS ---//
     graphics::load_font(FONT_GAME, "../../assets/fonts/FFFFORWA.TTF");

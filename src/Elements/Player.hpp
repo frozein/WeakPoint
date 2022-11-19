@@ -8,38 +8,29 @@
 
 //--- Player Settings ---//
 
-#define PLAYER_W 100
-#define PLAYER_H 160
+#define PLAYER_W 80
+#define PLAYER_H 80
 
-#define SPEED 1000
-
-#define JUMP_IMPULSE 1500
-#define GRAVITY 5000
+#define PLAYER_VEL 750
+#define PLAYER_ACC 7500 // how fast the player speeds up/slows down
 
 class Player : public Element {
 
 private:
-    bool canJump;
+    bool w, a, s, d;
 
-    QMvec2 playerVel;
-
-    // Returns true if the key argument is held down:
-    bool get_key_down(SDL_Scancode key);
+    vec2 pos;
+    vec2 vel;
 
 public:
-    QMvec2 playerPos;
-
     TextureAttributes playerAttr;
 
-    /* Create a player
-     * @param initX The initial x-position of the player.
-     * @param initY The initial y-position of the player.
-     */
-    Player(float initX, float initY);
+    Player(float _x, float _y);
 
-    void resolve_collision(int worldX, int worldY);
+    void handle_input(SDL_Event e);
 
+    float find_angle();
     void update(float dt);
+    
     void render();
-
 };

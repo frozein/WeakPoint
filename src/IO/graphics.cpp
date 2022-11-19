@@ -192,10 +192,9 @@ void graphics::load_font(FontIndex idx, const char* filePath) {
 }
 
 void graphics::load() {
-
+    #if DANIEL
     //--- LOAD TEXTURES ---//
 
-    #if DANIEL
     //- general -//
     graphics::load_texture(TEXTURE_MULTIPURPOSE_PIXEL, "../../assets/art/multipurpose_pixel.png");
 
@@ -203,16 +202,30 @@ void graphics::load() {
     graphics::load_texture(TEXTURE_PLAYER, "../../assets/art/player.png");
     graphics::load_texture(TEXTURE_TILESET, "../../assets/art/tileset.png");
 
+    graphics::load_texture(TEXTURE_BULLET, "../../art/bullet.png");
+    graphics::load_texture(TEXTURE_DRONE_GREEN, "../../art/droneGreen.png");
+    graphics::load_texture(TEXTURE_DRONE_PURPLE, "../../art/dronePurple.png");
+    graphics::load_texture(TEXTURE_DRONE_RED, "../../art/droneRed.png");
+    graphics::load_texture(TEXTURE_LINE, "../../art/line.png");
+
     //--- LOAD FONTS ---//
     graphics::load_font(FONT_GAME, "../../assets/fonts/FFFFORWA.TTF");
 
     #else
+    //--- LOAD TEXTURES ---//
+
     //- general -//
     graphics::load_texture(TEXTURE_MULTIPURPOSE_PIXEL, "art/multipurpose_pixel.png");
 
     //- game -//
     graphics::load_texture(TEXTURE_PLAYER, "art/player.png");
-    graphics::load_texture(TEXTURE_TILESET, "art/map.png");
+    graphics::load_texture(TEXTURE_TILESET, "art/tileset.png");
+
+    graphics::load_texture(TEXTURE_BULLET, "art/bullet.png");
+    graphics::load_texture(TEXTURE_DRONE_GREEN, "art/droneGreen.png");
+    graphics::load_texture(TEXTURE_DRONE_PURPLE, "art/dronePurple.png");
+    graphics::load_texture(TEXTURE_DRONE_RED, "art/droneRed.png");
+    graphics::load_texture(TEXTURE_LINE, "art/line.png");
 
     //--- LOAD FONTS ---//
     graphics::load_font(FONT_GAME, "fonts/FFFFORWA.TTF");

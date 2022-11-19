@@ -27,9 +27,18 @@ enum TextureIndex : unsigned char {
     //--- GENERAL ---//
 	TEXTURE_MULTIPURPOSE_PIXEL,
 
+	//--- MENU ---//
+	TEXTURE_LOGO,
+
 	//--- GAME ---//
 	TEXTURE_PLAYER,
-	TEXTURE_TILESET
+	TEXTURE_TILESET,
+
+	TEXTURE_BULLET,
+	TEXTURE_DRONE_GREEN,
+	TEXTURE_DRONE_PURPLE,
+	TEXTURE_DRONE_RED,
+	TEXTURE_LINE
 };
 
 // Represents all available fonts.

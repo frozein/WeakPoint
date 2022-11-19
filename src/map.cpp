@@ -1,5 +1,5 @@
 #include "map.hpp"
-#include "io/graphics.hpp"
+#include "IO/graphics.hpp"
 #include <memory>
 #include <math.h>
 #include <random>

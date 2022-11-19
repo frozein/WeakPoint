@@ -4,6 +4,11 @@ struct AABB
 	int minY, maxY;
 };
 
+#define MAP_W 48
+#define MAP_H 27
+
+#define TILE_SIDE 80
+
 class Map
 {
 public:

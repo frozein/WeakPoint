@@ -14,7 +14,7 @@ bool running = true;
 ivec2 mousePos = { 0, 0 };
 
 //------------------------------------------------------------------------------------------------//
-//VEC2 OPERATOR OVERLOADS:
+//VEC2 METHODS:
 
 vec2 vec2::operator+(const vec2& other) {
     return { this->x + other.x, this->y + other.y };

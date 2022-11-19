@@ -6,6 +6,23 @@
  * Includes declarations for the Player class and its methods.
  */
 
+//--- Dash Settings ---//
+
+#define DASH_RESET 2.0f
+#define DASH_TIME  0.4f
+
+#define DASH_VEL 2000
+
+struct Dash {
+    bool isDashing;
+    float resetTimer;
+    float dashTime;
+    float angle;
+
+    void init_dash(float _angle);
+    void reset_dash();
+};
+
 //--- Player Settings ---//
 
 #define PLAYER_W 80
@@ -18,6 +35,8 @@ class Player : public Element {
 
 private:
     bool w, a, s, d;
+
+    Dash dash;
 
     QMvec2 pos;
     QMvec2 vel;

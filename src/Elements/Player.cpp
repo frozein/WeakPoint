@@ -5,7 +5,31 @@
  * Includes definitions for the methods in the Player classes.
  */
 
+//----------------------------------------------------------------------//
+//DASH METHODS:
+
+void Dash::init_dash(float _angle) {
+    isDashing = true;
+    dashTime = DASH_TIME;
+    resetTimer = 0.0f;
+    angle = _angle;
+}
+
+void Dash::reset_dash() {
+    isDashing = false;
+    dashTime = 0.0f;
+    resetTimer = DASH_RESET;
+    angle = 0.0f;
+}
+
+//----------------------------------------------------------------------//
+//PLAYER METHODS:
+
 Player::Player(float _x, float _y) : w(false), a(false), s(false), d(false) {
+    dash.isDashing = false;
+    dash.dashTime = 0.0f;
+    dash.resetTimer = 0.0f;
+
     pos = { _x, _y };
     vel = { 0, 0 };
 
@@ -34,6 +58,22 @@ void Player::handle_input(SDL_Event e) {
             case SDLK_a: a = true; break;
             case SDLK_s: s = true; break;
             case SDLK_d: d = true; break;
+            case SDLK_SPACE:
+                if (!dash.isDashing && dash.resetTimer <= 0) {
+                    // initialize dash:
+                    QMvec2 cen = { pos.x + PLAYER_W / 2, pos.y + PLAYER_H / 2 };
+                    QMvec2 mouse = { (float)mousePos.x, (float)mousePos.y };
+                    dash.init_dash(find_angle(cen, mouse));
+
+                    // calculate dash velocity vector:
+                    float rad = QM_deg_to_rad(dash.angle);
+                    vel = { cosf(rad), sinf(rad) };
+                    vel = QM_vec2_scale(vel, DASH_VEL);
+
+                    // update player angle:
+                    playerAttr.angle = find_angle(cen, mouse) - 90.0f;
+                }
+                break;
             default: break;
         }
         break;
@@ -54,6 +94,25 @@ void Player::handle_input(SDL_Event e) {
 }
 
 void Player::update(float dt) {
+    // if dashing:
+    if (dash.isDashing) {
+
+        // dash vel is calculated in handle input.
+        pos.x += vel.x * dt;
+        pos.y += vel.y * dt;
+        playerAttr.dstRect.x = (int)pos.x;
+        playerAttr.dstRect.y = (int)pos.y;
+
+        // update dash:
+        dash.dashTime -= dt;
+        if (dash.dashTime < 0.0f) {
+            dash.reset_dash();
+            vel = { 0.0f, 0.0f };
+        }
+
+        return;
+    }
+
     // find velocity player should be:
     QMvec2 findVel = { 0, 0 };
     if (w) findVel.y -= PLAYER_VEL;
@@ -88,6 +147,10 @@ void Player::update(float dt) {
 
     if (QM_vec2_length(findVel) != 0.0f)
         playerAttr.angle = find_angle({ 0.0f, 0.0f }, vel) - 90.0f;
+
+    // update dashing:
+    if (dash.resetTimer > 0.0f)
+        dash.resetTimer -= dt;
 }
 
 void Player::render() {

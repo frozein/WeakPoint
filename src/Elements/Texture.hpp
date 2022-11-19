@@ -14,7 +14,6 @@ private:
 
 public:
     Texture(TextureAttributes* _attrPtr);
-    
-    void render();
 
+    void render();
 };

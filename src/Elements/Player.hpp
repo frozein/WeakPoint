@@ -3,8 +3,10 @@
 
 /*
  * FILE DESCRIPTION:
- * Includes declarations for the Player class and its methods.
+ * Includes declarations for the Player class and any related structures and their methods.
  */
+
+//TODO: Maybe add afterimages when dashing
 
 //--- Dash Settings ---//
 
@@ -45,8 +47,6 @@ public:
     TextureAttributes playerAttr;
 
     Player(float _x, float _y);
-
-    float find_angle(QMvec2 from, QMvec2 to);
 
     void handle_input(SDL_Event e);
     void update(float dt);    

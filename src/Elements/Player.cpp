@@ -36,19 +36,6 @@ Player::Player(float _x, float _y) : w(false), a(false), s(false), d(false) {
     playerAttr = TextureAttributes(TEXTURE_PLAYER, graphics::SRC_NULL, { (int)pos.x, (int)pos.y, PLAYER_W, PLAYER_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
 }
 
-float Player::find_angle(QMvec2 from, QMvec2 to) {
-    if (to.x == from.x) {
-        if (to.y >= from.y) return 90.0f;
-        else                return -90.0f;
-    }
-
-    QMvec2 delta = { to.x - from.x, to.y - from.y };
-    delta = QM_vec2_normalize(delta);
-    float angle = QM_rad_to_deg(acos(delta.x));
-    if (delta.y < 0) angle *= -1;
-    return angle;
-}
-
 void Player::handle_input(SDL_Event e) {
     switch (e.type) {
         
@@ -107,7 +94,8 @@ void Player::update(float dt) {
         dash.dashTime -= dt;
         if (dash.dashTime < 0.0f) {
             dash.reset_dash();
-            vel = { 0.0f, 0.0f };
+            vel = QM_vec2_normalize(vel);
+            vel = QM_vec2_scale(vel, PLAYER_VEL);
         }
 
         return;

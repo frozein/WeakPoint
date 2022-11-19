@@ -14,6 +14,22 @@ bool running = true;
 ivec2 mousePos = { 0, 0 };
 
 //------------------------------------------------------------------------------------------------//
+//FUNCTIONS:
+
+float find_angle(QMvec2 from, QMvec2 to) {
+    if (to.x == from.x) {
+        if (to.y >= from.y) return 90.0f;
+        else                return -90.0f;
+    }
+
+    QMvec2 delta = { to.x - from.x, to.y - from.y };
+    delta = QM_vec2_normalize(delta);
+    float angle = QM_rad_to_deg(acos(delta.x));
+    if (delta.y < 0) angle *= -1;
+    return angle;
+}
+
+//------------------------------------------------------------------------------------------------//
 //VECTOR METHODS:
 
 void vec2::normalize() {

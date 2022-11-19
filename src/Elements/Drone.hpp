@@ -28,6 +28,7 @@ private:
     std::shared_ptr<Player> playerPtr;
     
     QMvec2 pos;
+    QMvec2 cen;
     
     float reloadTimer;
     std::vector<Bullet> bullets;

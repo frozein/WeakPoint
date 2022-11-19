@@ -8,13 +8,12 @@
 Drone::Drone(std::shared_ptr<Player> _playerPtr, float x, float y) {
     playerPtr = _playerPtr;
     pos = { x, y };
+    cen = { pos.x + DRONE_W / 2, pos.y + DRONE_H / 2 };
     reloadTimer = DRONE_FIRERATE;
     droneAttr = TextureAttributes(TEXTURE_DRONE_GREEN, graphics::SRC_NULL, { (int)pos.x, (int)pos.y, DRONE_W, DRONE_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
 }
 
 void Drone::fire() {
-    QMvec2 cen = { pos.x + DRONE_W / 2, pos.y + DRONE_H / 2 };
-
     Bullet newBullet;
     newBullet.pos = cen;
 
@@ -42,7 +41,6 @@ void Drone::update(float dt) {
     }
 
     // adjust angle:
-    QMvec2 cen = { pos.x + DRONE_W / 2, pos.y + DRONE_H / 2 };
     QMvec2 playerCen = { (float)playerPtr->playerAttr.dstRect.x + PLAYER_W / 2, (float)playerPtr->playerAttr.dstRect.y + PLAYER_H / 2 };
     droneAttr.angle = find_angle(cen, playerCen) - 90.0f;
 }
@@ -53,4 +51,5 @@ void Drone::render() {
     });
 
     graphics::render_texture(droneAttr);
+    graphics::render_texture(TextureAttributes(TEXTURE_LINE, graphics::SRC_NULL, { (int)cen.x, (int)cen.y, 50, 5 }, droneAttr.angle + 90.0f, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, true, 1));
 }

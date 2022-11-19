@@ -29,7 +29,6 @@ class Drone : public Element {
 private:
     std::shared_ptr<Player> playerPtr;
     
-    QMvec2 pos;
     QMvec2 cen;
     
     float reloadTimer;
@@ -37,10 +36,11 @@ private:
 
     float weakSpot;
     
+protected:
+    QMvec2 pos;
     TextureAttributes droneAttr;
 
-protected:
-    void fire();
+    virtual void fire(float speed);
 
 public:
     Drone(std::shared_ptr<Player> _playerPtr, float x, float y);
@@ -52,7 +52,7 @@ public:
 //----------------------------------------------------------------------//
 //GREEN DRONE:
 
-#define DRONE_FIRERATE 1.5f
+#define GREENDRONE_FIRERATE 1.5f
 
 class GreenDrone : public Drone {
 
@@ -61,6 +61,40 @@ private:
 
 public:
     GreenDrone(std::shared_ptr<Player> _playerPtr, float x, float y);
+
+    void update(float dt);
+};
+
+//----------------------------------------------------------------------//
+//PURPLE DRONE:
+
+#define PURPLEDRONE_FIRERATE 2.0f
+
+class PurpleDrone : public Drone {
+
+private:
+    float timer1;
+    float timer2;
+
+public:
+    PurpleDrone(std::shared_ptr<Player> _playerPtr, float x, float y);
+
+    void update(float dt);
+};
+
+//----------------------------------------------------------------------//
+//RED DRONES:
+
+#define REDBULLET_VEL 3000
+#define REDDRONE_FIRERATE 3.0f
+
+class RedDrone : public Drone {
+
+private:
+    float reloadTimer;
+
+public:
+    RedDrone(std::shared_ptr<Player> _playerPtr, float x, float y);
 
     void update(float dt);
 };

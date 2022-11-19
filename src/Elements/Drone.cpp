@@ -12,18 +12,17 @@ Drone::Drone(std::shared_ptr<Player> _playerPtr, float x, float y) {
     playerPtr = _playerPtr;
     pos = { x, y };
     cen = { pos.x + DRONE_W / 2, pos.y + DRONE_H / 2 };
-    reloadTimer = DRONE_FIRERATE;
+    reloadTimer = GREENDRONE_FIRERATE;
     weakSpot = (float)(rand() % 180);
-    droneAttr = TextureAttributes(TEXTURE_DRONE_GREEN, graphics::SRC_NULL, { (int)pos.x, (int)pos.y, DRONE_W, DRONE_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
 }
 
-void Drone::fire() {
+void Drone::fire(float speed) {
     Bullet newBullet;
     newBullet.pos = cen;
 
     float rad = QM_deg_to_rad(droneAttr.angle + 90.0f);
     newBullet.vel = { cosf(rad), sinf(rad) };
-    newBullet.vel = QM_vec2_scale(newBullet.vel, BULLET_VEL);
+    newBullet.vel = QM_vec2_scale(newBullet.vel, speed);
 
     bullets.push_back(newBullet);
 }
@@ -55,13 +54,56 @@ void Drone::render() {
 //----------------------------------------------------------------------//
 //GREEN DRONE METHODS:
 
-GreenDrone::GreenDrone(std::shared_ptr<Player> _playerPtr, float x, float y) : Drone(_playerPtr, x, y), reloadTimer(DRONE_FIRERATE) { }
+GreenDrone::GreenDrone(std::shared_ptr<Player> _playerPtr, float x, float y) : Drone(_playerPtr, x, y), reloadTimer(GREENDRONE_FIRERATE) { 
+    droneAttr = TextureAttributes(TEXTURE_DRONE_GREEN, graphics::SRC_NULL, { (int)pos.x, (int)pos.y, DRONE_W, DRONE_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
+}
 
 void GreenDrone::update(float dt) {
     reloadTimer -= dt;
     if (reloadTimer <= 0.0f) {
-        Drone::fire();
-        reloadTimer = DRONE_FIRERATE;
+        Drone::fire(BULLET_VEL);
+        reloadTimer = GREENDRONE_FIRERATE;
+    }
+
+    Drone::update(dt);
+}
+
+//----------------------------------------------------------------------//
+//PURPLE DRONE METHODS:
+
+PurpleDrone::PurpleDrone(std::shared_ptr<Player> _playerPtr, float x, float y) : Drone(_playerPtr, x, y), timer1(2.0f), timer2(2.5f) { 
+    droneAttr = TextureAttributes(TEXTURE_DRONE_PURPLE, graphics::SRC_NULL, { (int)pos.x, (int)pos.y, DRONE_W, DRONE_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
+}
+
+void PurpleDrone::update(float dt) {
+    timer1 -= dt;
+    timer2 -= dt;
+
+    if (timer1 <= 0.0f) {
+        Drone::fire(BULLET_VEL);
+        timer1 = PURPLEDRONE_FIRERATE;
+    }
+
+    if (timer2 <= 0.0f) {
+        Drone::fire(BULLET_VEL);
+        timer2 = PURPLEDRONE_FIRERATE;
+    }
+
+    Drone::update(dt);
+}
+
+//----------------------------------------------------------------------//
+//RED DRONE METHODS:
+
+RedDrone::RedDrone(std::shared_ptr<Player> _playerPtr, float x, float y) : Drone(_playerPtr, x, y), reloadTimer(REDDRONE_FIRERATE) { 
+    droneAttr = TextureAttributes(TEXTURE_DRONE_RED, graphics::SRC_NULL, { (int)pos.x, (int)pos.y, DRONE_W, DRONE_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
+}
+
+void RedDrone::update(float dt) {
+    reloadTimer -= dt;
+    if (reloadTimer <= 0.0f) {
+        Drone::fire(REDBULLET_VEL);
+        reloadTimer = REDDRONE_FIRERATE;
     }
 
     Drone::update(dt);

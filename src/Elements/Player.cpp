@@ -12,6 +12,19 @@ Player::Player(float _x, float _y) : w(false), a(false), s(false), d(false) {
     playerAttr = TextureAttributes(TEXTURE_PLAYER, graphics::SRC_NULL, { (int)pos.x, (int)pos.y, PLAYER_W, PLAYER_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
 }
 
+float Player::find_angle(QMvec2 from, QMvec2 to) {
+    if (to.x == from.x) {
+        if (to.y >= from.y) return 90.0f;
+        else                return -90.0f;
+    }
+
+    QMvec2 delta = { to.x - from.x, to.y - from.y };
+    delta = QM_vec2_normalize(delta);
+    float angle = QM_rad_to_deg(acos(delta.x));
+    if (delta.y < 0) angle *= -1;
+    return angle;
+}
+
 void Player::handle_input(SDL_Event e) {
     switch (e.type) {
         
@@ -40,22 +53,9 @@ void Player::handle_input(SDL_Event e) {
     }
 }
 
-float Player::find_angle() {
-    if (mousePos.x == pos.x) {
-        if (mousePos.y >= pos.y)    return 0.0f;
-        else                        return 180.0f;
-    }
-
-    QMvec2 delta = { mousePos.x - pos.x, mousePos.y - pos.y };
-    delta = QM_vec2_normalize(delta);
-    float angle = QM_rad_to_deg(acos(delta.x));
-    if (delta.y > 0) angle *= -1;
-    return angle;
-}
-
 void Player::update(float dt) {
     // find velocity player should be:
-    vec2 findVel = { 0, 0 };
+    QMvec2 findVel = { 0, 0 };
     if (w) findVel.y -= PLAYER_VEL;
     if (a) findVel.x -= PLAYER_VEL;
     if (s) findVel.y += PLAYER_VEL;
@@ -86,7 +86,8 @@ void Player::update(float dt) {
     playerAttr.dstRect.x = (int)pos.x;
     playerAttr.dstRect.y = (int)pos.y;
 
-    playerAttr.angle = find_angle();
+    if (QM_vec2_length(findVel) != 0.0f)
+        playerAttr.angle = find_angle({ 0.0f, 0.0f }, vel) - 90.0f;
 }
 
 void Player::render() {

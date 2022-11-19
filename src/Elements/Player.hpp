@@ -27,10 +27,9 @@ public:
 
     Player(float _x, float _y);
 
-    void handle_input(SDL_Event e);
+    float find_angle(QMvec2 from, QMvec2 to);
 
-    float find_angle();
+    void handle_input(SDL_Event e);
     void update(float dt);    
-    
     void render();
 };

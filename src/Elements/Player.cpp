@@ -133,8 +133,9 @@ void Player::update(float dt) {
     playerAttr.dstRect.x = (int)pos.x;
     playerAttr.dstRect.y = (int)pos.y;
 
-    if (QM_vec2_length(findVel) != 0.0f)
-        playerAttr.angle = find_angle({ 0.0f, 0.0f }, vel) - 90.0f;
+    QMvec2 cen = { pos.x + PLAYER_W / 2, pos.y + PLAYER_H / 2 };
+    QMvec2 mouse = { (float)mousePos.x, (float)mousePos.y };
+    playerAttr.angle = find_angle(cen, mouse) - 90.0f;
 
     // update dashing:
     if (dash.resetTimer > 0.0f)

@@ -41,6 +41,7 @@ private:
     QMvec2 vel;
 
 public:
+    unsigned int score;
     unsigned int hp;
     float hurtTimer;
 

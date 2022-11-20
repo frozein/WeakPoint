@@ -6,6 +6,10 @@ GameScene::GameScene() {
 
     elements.push_back(std::make_shared<RedDrone>(playerPtr, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
 
+    scoreText = TextureAttributes(TEXTURE_MULTIPURPOSE_PIXEL, graphics::SRC_NULL, { 100, 100, 0, 0 }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 2);
+    score = "0";
+    elements.push_back(std::make_shared<VariableText>(&score, &scoreText));
+
     //temp map just for testing:
     Map::TileType tiles[MAP_W * MAP_H];
     Map::PropType props[MAP_W * MAP_H];
@@ -27,6 +31,8 @@ void GameScene::update(float dt)
 {
     if (playerPtr->hp == 0)
         std::cout << "game end\n";
+
+    score = std::to_string(playerPtr->score);
 
     Scene::update(dt);
 }

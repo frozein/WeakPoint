@@ -40,6 +40,7 @@ void Drone::update(float dt) {
         int weak = (int)weakSpot % 180;
         if (abs(dash - weak) <= FORGIVENESS || abs(dash - weak) >= 180 - FORGIVENESS) { // drone has been destroyed
             active = false;
+            playerPtr->score++;
             playerPtr->dash.reset_dash(true);
             return;
         }

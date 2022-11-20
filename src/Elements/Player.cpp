@@ -27,7 +27,7 @@ void Dash::reset_dash(bool gotReset) {
 //----------------------------------------------------------------------//
 //PLAYER METHODS:
 
-Player::Player(float _x, float _y) : w(false), a(false), s(false), d(false), hp(3), hurtTimer(0.0f) {
+Player::Player(float _x, float _y) : w(false), a(false), s(false), d(false), score(0), hp(3), hurtTimer(0.0f) {
     dash.dashTime = 0.0f;
     dash.cooldown = 0.0f;
 

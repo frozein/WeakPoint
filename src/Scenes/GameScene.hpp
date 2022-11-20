@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.hpp"
+#include "Elements/Text.hpp"
 #include "Elements/Player.hpp"
 #include "Elements/Drone.hpp"
 #include "map.hpp"
@@ -8,6 +9,8 @@ class GameScene : public Scene {
 
 private:
     std::shared_ptr<Player> playerPtr;
+    std::string score;
+    TextureAttributes scoreText;
     std::vector< std::shared_ptr<Drone> > dronePtrs;
     Map* map;
 

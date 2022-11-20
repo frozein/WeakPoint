@@ -9,6 +9,7 @@ class MenuScene : public Scene {
 private:
     bool inGame;
     TextureAttributes logoAttr;
+    TextureAttributes vignetteAttr;
 
 public:
     MenuScene();

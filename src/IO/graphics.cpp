@@ -201,6 +201,7 @@ void graphics::load() {
     //- menu -//
     graphics::load_texture(TEXTURE_ANIMATED_BUTTON, "../../art/animated_button.png");
     graphics::load_texture(TEXTURE_LOGO, "../../art/logo.png");
+    graphics::load_texture(TEXTURE_VIGNETTE, "../../art/vignette.png");
 
     //- game -//
     graphics::load_texture(TEXTURE_PLAYER, "../../assets/art/player.png");
@@ -224,6 +225,7 @@ void graphics::load() {
     //- menu -//
     graphics::load_texture(TEXTURE_ANIMATED_BUTTON, "art/animated_button.png");
     graphics::load_texture(TEXTURE_LOGO, "art/logo.png");
+    graphics::load_texture(TEXTURE_VIGNETTE, "art/vignette.png");
 
     //- game -//
     graphics::load_texture(TEXTURE_PLAYER, "art/player.png");

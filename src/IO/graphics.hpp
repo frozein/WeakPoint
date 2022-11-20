@@ -30,6 +30,7 @@ enum TextureIndex : unsigned char {
 	//--- MENU ---//
 	TEXTURE_ANIMATED_BUTTON,
 	TEXTURE_LOGO,
+	TEXTURE_VIGNETTE,
 
 	//--- GAME ---//
 	TEXTURE_PLAYER,

@@ -39,15 +39,6 @@ Player::Player(float _x, float _y, Map* _map) : w(false), a(false), s(false), d(
     playerAttr = TextureAttributes(TEXTURE_PLAYER, graphics::SRC_NULL, { (int)pos.x, (int)pos.y, PLAYER_W, PLAYER_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
 }
 
-const int COLLISION_RANGE = 10;
-
-void Player::resolve_collision(AABB collision, float dt, bool x) {
-    if (x)
-        pos.x -= vel.x * dt;
-    else
-        pos.y -= vel.y * dt;
-}
-
 void Player::handle_input(SDL_Event e) {
     switch (e.type) {
         
@@ -156,7 +147,7 @@ void Player::update(float dt) {
             pos.x + PLAYER_W >= collision.minX && pos.x <= collision.maxX &&
             pos.y + PLAYER_H >= collision.minY && pos.y <= collision.maxY) 
         {
-            resolve_collision(collision, dt, true);
+            pos.x -= vel.x * dt;
         }
 
     pos.y += vel.y * dt;
@@ -166,7 +157,7 @@ void Player::update(float dt) {
             pos.x + PLAYER_W >= collision.minX && pos.x <= collision.maxX &&
             pos.y + PLAYER_H >= collision.minY && pos.y <= collision.maxY) 
         {
-            resolve_collision(collision, dt, false);
+            pos.y -= vel.y * dt;
         }
 
     playerAttr.dstRect.x = (int)pos.x;

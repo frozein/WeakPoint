@@ -55,8 +55,6 @@ public:
 
     Player(float _x, float _y, Map* _map);
 
-    void resolve_collision(AABB collision, float dt, bool x);
-
     void handle_input(SDL_Event e);
     void update(float dt);    
     void render();

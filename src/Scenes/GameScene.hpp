@@ -9,8 +9,14 @@ class GameScene : public Scene {
 
 private:
     std::shared_ptr<Player> playerPtr;
+
     std::string score;
     TextureAttributes scoreText;
+
+    std::string cooldown;
+    TextureAttributes cooldownText;
+    TextureAttributes cooldownIndicator;
+
     std::vector< std::shared_ptr<Drone> > dronePtrs;
     Map* map;
 

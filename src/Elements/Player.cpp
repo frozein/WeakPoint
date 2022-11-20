@@ -27,7 +27,7 @@ void Dash::reset_dash(bool gotReset) {
 //----------------------------------------------------------------------//
 //PLAYER METHODS:
 
-Player::Player(float _x, float _y) : w(false), a(false), s(false), d(false) {
+Player::Player(float _x, float _y) : w(false), a(false), s(false), d(false), hp(3), hurtTimer(0.0f) {
     dash.dashTime = 0.0f;
     dash.cooldown = 0.0f;
 
@@ -82,7 +82,14 @@ void Player::handle_input(SDL_Event e) {
 }
 
 void Player::update(float dt) {
-    std::cout << dash.cooldown << "\n";
+    if (hurtTimer > 0.0f) {
+        hurtTimer -= dt;
+        playerAttr.color = { 255, 0, 0, 255 };
+
+        if (hurtTimer <= 0.0f)
+            playerAttr.color = { 255, 255, 255, 255 };
+    }
+
     // if dashing:
     if (dash.dashTime > 0.0f) {
         pos.x += vel.x * dt; // dash vel is calculated in handle input.
@@ -92,7 +99,7 @@ void Player::update(float dt) {
 
         // update dash:
         dash.dashTime -= dt;
-        if (dash.dashTime < 0.0f) {
+        if (dash.dashTime <= 0.0f) {
             dash.reset_dash(false);
             vel = QM_vec2_normalize(vel);
             vel = QM_vec2_scale(vel, PLAYER_VEL);

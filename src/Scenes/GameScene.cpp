@@ -5,8 +5,7 @@ GameScene::GameScene() {
     playerPtr = std::make_shared<Player>(500, 500);
     elements.push_back(playerPtr);
 
-    dronePtrs.push_back(std::make_shared<RedDrone>(playerPtr, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
-    elements.insert(elements.end(), dronePtrs.begin(), dronePtrs.end());
+    elements.push_back(std::make_shared<RedDrone>(playerPtr, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
 
     //temp map just for testing:
     Map::TileType tiles[MAP_W * MAP_H];
@@ -27,9 +26,9 @@ GameScene::~GameScene()
 
 void GameScene::update(float dt)
 {
-    for (int i = 0; i < elements.size(); i++)
-        if (!elements.at(i)->active)
-            elements.erase(elements.begin() + i);
+    if (playerPtr->hp == 0) {
+        //TODO: end game
+    }
 
     Scene::update(dt);
 }

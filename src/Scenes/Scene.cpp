@@ -23,7 +23,13 @@ void Scene::handle_input(SDL_Event e) {
 
 void Scene::update(float dt) {
     time += dt;
-    std::for_each(elements.begin(), elements.end(), [dt](std::shared_ptr<Element> element){ element->update(dt); });
+
+    for (int i = 0; i < elements.size(); i++) {
+        elements.at(i)->update(dt);
+
+        if (!elements.at(i)->active)
+            elements.erase(elements.begin() + i);
+    }
 }
 
 void Scene::render() {

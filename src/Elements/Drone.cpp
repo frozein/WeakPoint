@@ -31,6 +31,7 @@ const int FORGIVENESS = 15;
 
 void Drone::update(float dt) {
     SDL_Rect playerHitbox = playerPtr->playerAttr.dstRect;
+
     if (playerHitbox.x + PLAYER_W >= pos.x && playerHitbox.x <= pos.x + DRONE_W &&
         playerHitbox.y + PLAYER_H >= pos.y && playerHitbox.y <= pos.y + DRONE_H &&
         playerPtr->dash.dashTime > 0.0f)
@@ -48,9 +49,20 @@ void Drone::update(float dt) {
         bullets.at(i).pos.x += bullets.at(i).vel.x * dt;
         bullets.at(i).pos.y += bullets.at(i).vel.y * dt;
 
-        // check if bullet is out of the window's range
-        if (bullets.at(i).pos.x + BULLET_SIDE < 0 || bullets.at(i).pos.x > WINDOW_WIDTH || bullets.at(i).pos.y + BULLET_SIDE < 0 || bullets.at(i).pos.y > WINDOW_HEIGHT)
+        QMvec2 bulletHitbox = bullets.at(i).pos;
+
+        // check if bullet is out of the window's range:
+        if (bulletHitbox.x + BULLET_SIDE < 0 || bulletHitbox.x > WINDOW_WIDTH || bulletHitbox.y + BULLET_SIDE < 0 || bulletHitbox.y > WINDOW_HEIGHT)
             bullets.erase(bullets.begin() + i);
+
+        // check if bullet contacting player:
+        if (bulletHitbox.x + BULLET_SIDE >= playerHitbox.x && bulletHitbox.x <= playerHitbox.x + PLAYER_W &&
+            bulletHitbox.y + BULLET_SIDE >= playerHitbox.y && bulletHitbox.x <= playerHitbox.y + PLAYER_H)
+        {
+            playerPtr->hp--;
+            playerPtr->hurtTimer = 0.5f;
+            bullets.erase(bullets.begin() + i);
+        }
     }
 
     // adjust angle:

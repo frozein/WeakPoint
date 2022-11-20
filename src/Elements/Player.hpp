@@ -41,6 +41,9 @@ private:
     QMvec2 vel;
 
 public:
+    unsigned int hp;
+    float hurtTimer;
+
     Dash dash;
 
     TextureAttributes playerAttr;

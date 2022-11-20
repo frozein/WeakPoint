@@ -80,7 +80,7 @@ void audio::load_music(MusicIndex idx, const char* filePath) {
 
 }
 
-void audio::load_sfx(SfxIndex idx, const char* filePath) {
+void audio::load_sfx(SfxIndex idx, const char* filePath, unsigned int volume) {
 
     // Check if idx is in range:
     if (idx >= MAX_SFX) {
@@ -95,7 +95,7 @@ void audio::load_sfx(SfxIndex idx, const char* filePath) {
         std::string mixErrMsg(Mix_GetError());
         throw std::ios_base::failure("[Possible invalid file path argument] Unable to load SFX file at " + strFilePath + " - " + mixErrMsg);
     }
-
+    Mix_VolumeChunk(sfx[idx], volume);
 }
 
 void audio::load() {
@@ -103,7 +103,21 @@ void audio::load() {
     //--- LOAD MUSIC ---//
 
     //--- LOAD SFX ---//
+    #if DANIEL
 
+    load_sfx(SFX_DASH, "../../assets/sfx/dash.wav", 128);
+    load_sfx(SFX_BULLET, "../../assets/sfx/bullet.wav", 25);
+    load_sfx(SFX_KILL, "../../assets/sfx/kill.wav", 128);
+    load_sfx(SFX_DAMAGE, "../../assets/sfx/damage.wav", 128);
+
+    #else
+
+    load_sfx(SFX_DASH, "sfx/dash.wav", 128);
+    load_sfx(SFX_BULLET, "sfx/bullet.wav", 25);
+    load_sfx(SFX_KILL, "sfx/kill.wav", 128);
+    load_sfx(SFX_DAMAGE, "sfx/damage.wav", 128);
+
+    #endif
 }
 
 //------------------------------------------------------------------------------------------------//

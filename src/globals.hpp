@@ -19,7 +19,7 @@
  * Includes globally relevant information.
  */
 
-#define DANIEL 0
+#define DANIEL 1
 
 extern bool running;
 struct ivec2;

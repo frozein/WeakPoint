@@ -19,7 +19,10 @@ enum MusicIndex : unsigned char {
 // Represents all of the SFX sound effects available and their indices.
 // All indices are expected to be properly loaded, use audio::load_sfx() for every index.
 enum SfxIndex : unsigned char {
-
+    SFX_DASH,
+    SFX_BULLET,
+    SFX_KILL,
+    SFX_DAMAGE
 };
 
 namespace audio {
@@ -52,7 +55,7 @@ namespace audio {
      * @throws std::out_of_range - When an SFX sound effect is loaded at an index out of range.
      * @throws std::ios_base::failure - When SFX sound effect loading is unsuccessful.
      */
-    void load_sfx(SfxIndex idx, const char* filePath);
+    void load_sfx(SfxIndex idx, const char* filePath, unsigned int volume);
     /* Loads all music and SFX needed for the game.
      * @throws Throws exceptions if any song or SFX loading is unsuccessful.
      * Look at audio::load_music() and audio::load_font() for more details on exceptions.

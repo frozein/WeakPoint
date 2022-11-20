@@ -190,7 +190,7 @@ void graphics::load_font(FontIndex idx, const char* filePath) {
         throw std::ios_base::failure("[Possible invalid file path argument] Unable to load font at " + strFilePath + " - " + ttfErrMsg);
     }
 }
-
+    
 void graphics::load() {
     #if DANIEL
     //--- LOAD TEXTURES ---//
@@ -202,9 +202,9 @@ void graphics::load() {
     graphics::load_texture(TEXTURE_ANIMATED_BUTTON, "../../assets/art/animated_button.png");
     graphics::load_texture(TEXTURE_LOGO, "../../assets/art/logo.png");
     graphics::load_texture(TEXTURE_VIGNETTE, "../../assets/art/vignette.png");
+    graphics::load_texture(TEXTURE_HEART, "../../assets/art/heart.png");
 
     //- game -//
-    graphics::load_texture(TEXTURE_HEART, "../../assets/art/heart.png");
     graphics::load_texture(TEXTURE_PLAYER, "../../assets/art/player.png");
     graphics::load_texture(TEXTURE_TILESET, "../../assets/art/tileset.png");
 
@@ -227,9 +227,9 @@ void graphics::load() {
     graphics::load_texture(TEXTURE_ANIMATED_BUTTON, "art/animated_button.png");
     graphics::load_texture(TEXTURE_LOGO, "art/logo.png");
     graphics::load_texture(TEXTURE_VIGNETTE, "art/vignette.png");
+    graphics::load_texture(TEXTURE_HEART, "art/heart.png");
 
     //- game -//
-    graphics::load_texture(TEXTURE_HEART, "art/heart.png");
     graphics::load_texture(TEXTURE_PLAYER, "art/player.png");
     graphics::load_texture(TEXTURE_TILESET, "art/tileset.png");
 

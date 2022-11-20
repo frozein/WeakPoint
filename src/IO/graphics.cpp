@@ -198,6 +198,10 @@ void graphics::load() {
     //- general -//
     graphics::load_texture(TEXTURE_MULTIPURPOSE_PIXEL, "../../assets/art/multipurpose_pixel.png");
 
+    //- menu -//
+    graphics::load_texture(TEXTURE_ANIMATED_BUTTON, "../../art/animated_button.png");
+    graphics::load_texture(TEXTURE_LOGO, "../../art/logo.png");
+
     //- game -//
     graphics::load_texture(TEXTURE_PLAYER, "../../assets/art/player.png");
     graphics::load_texture(TEXTURE_TILESET, "../../assets/art/tileset.png");
@@ -216,6 +220,10 @@ void graphics::load() {
 
     //- general -//
     graphics::load_texture(TEXTURE_MULTIPURPOSE_PIXEL, "art/multipurpose_pixel.png");
+
+    //- menu -//
+    graphics::load_texture(TEXTURE_ANIMATED_BUTTON, "art/animated_button.png");
+    graphics::load_texture(TEXTURE_LOGO, "art/logo.png");
 
     //- game -//
     graphics::load_texture(TEXTURE_PLAYER, "art/player.png");

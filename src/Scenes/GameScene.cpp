@@ -1,7 +1,6 @@
 #include "GameScene.hpp"
 
 GameScene::GameScene() {
-
     playerPtr = std::make_shared<Player>(500, 500);
     elements.push_back(playerPtr);
 

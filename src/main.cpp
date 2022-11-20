@@ -4,7 +4,7 @@
 #include "Scenes/Scene.hpp"
 #include <SDL.h>
 
-#include "Scenes/GameScene.hpp" // Change depending on what the starting scene is.
+#include "Scenes/MenuScene.hpp" // Change depending on what the starting scene is.
 #include "quickmath.h"
 
 int main(int argc, char** argv) {
@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
         audio::init();
         audio::load();
 
-        currentScene = std::make_unique<GameScene>();
+        currentScene = std::make_unique<MenuScene>();
     }
     catch (std::ios_base::failure& e) {
         std::cerr << "I/O ERROR: " << e.what() << std::endl;

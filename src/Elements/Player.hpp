@@ -1,5 +1,6 @@
 #pragma once
 #include "Element.hpp"
+#include "map.hpp"
 
 /*
  * FILE DESCRIPTION:
@@ -19,6 +20,7 @@ struct Dash {
     float cooldown;
     float dashTime;
     float angle;
+    QMvec2 vel;
 
     void init_dash(float _angle);
     void reset_dash(bool gotReset);
@@ -35,6 +37,8 @@ struct Dash {
 class Player : public Element {
 
 private:
+    Map* map;
+
     bool w, a, s, d;
 
     QMvec2 pos;
@@ -49,7 +53,9 @@ public:
 
     TextureAttributes playerAttr;
 
-    Player(float _x, float _y);
+    Player(float _x, float _y, Map* _map);
+
+    void resolve_collision(AABB collision, float dt, bool x);
 
     void handle_input(SDL_Event e);
     void update(float dt);    

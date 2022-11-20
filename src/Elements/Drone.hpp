@@ -37,10 +37,11 @@ private:
     std::vector<Bullet> bullets;
 
     float weakSpot;
-    
+
 protected:
     QMvec2 pos;
     TextureAttributes droneAttr;
+    float lineOpacity = 1.0f;
 
     virtual void fire(float speed);
 
@@ -78,6 +79,7 @@ private:
     float timer1;
     float timer2;
 
+    float timeToNext;
 public:
     PurpleDrone(std::shared_ptr<Player> _playerPtr, float x, float y);
 

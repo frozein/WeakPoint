@@ -97,7 +97,7 @@ void Drone::render() {
     rotorPos = QM_vec2_add(cen, QM_vec2_scale({cosf(QM_deg_to_rad(droneAttr.angle + 180.0f)), sinf(QM_deg_to_rad(droneAttr.angle + 180.0f))}, 75.0f));
     graphics::render_texture(TextureAttributes(TEXTURE_MULTIPURPOSE_PIXEL, graphics::SRC_NULL, { (int)(rotorPos.x), (int)(rotorPos.y), 10, 60}, (float)SDL_GetTicks(), NULL, SDL_FLIP_NONE, {70, 70, 70, 255}, true, 1));
 
-    graphics::render_texture(TextureAttributes(TEXTURE_LINE, graphics::SRC_NULL, { (int)cen.x, (int)cen.y, 195, 10 }, weakSpot, NULL, SDL_FLIP_NONE, {255, 255, 255, 255}, true, 1));
+    graphics::render_texture(TextureAttributes(TEXTURE_LINE, graphics::SRC_NULL, { (int)cen.x, (int)cen.y, 195, 10 }, weakSpot, NULL, SDL_FLIP_NONE, {255, 255, 255, (uint8_t)(lineOpacity * 255)}, true, 1));
 }
 
 //----------------------------------------------------------------------//
@@ -114,13 +114,16 @@ void GreenDrone::update(float dt) {
         reloadTimer = GREENDRONE_FIRERATE;
     }
 
+    lineOpacity = reloadTimer / GREENDRONE_FIRERATE;
+    lineOpacity = 1.0f - powf(2.0f, -10.0f * lineOpacity);
+
     Drone::update(dt);
 }
 
 //----------------------------------------------------------------------//
 //PURPLE DRONE METHODS:
 
-PurpleDrone::PurpleDrone(std::shared_ptr<Player> _playerPtr, float x, float y) : Drone(_playerPtr, x, y), timer1(2.0f), timer2(2.5f) { 
+PurpleDrone::PurpleDrone(std::shared_ptr<Player> _playerPtr, float x, float y) : Drone(_playerPtr, x, y), timer1(2.0f), timer2(2.5f), timeToNext(2.0f) { 
     droneAttr = TextureAttributes(TEXTURE_DRONE_PURPLE, graphics::SRC_NULL, { (int)pos.x, (int)pos.y, DRONE_W, DRONE_H }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
 }
 
@@ -131,12 +134,17 @@ void PurpleDrone::update(float dt) {
     if (timer1 <= 0.0f) {
         Drone::fire(BULLET_VEL);
         timer1 = PURPLEDRONE_FIRERATE;
+        timeToNext = timer2;
     }
 
     if (timer2 <= 0.0f) {
         Drone::fire(BULLET_VEL);
         timer2 = PURPLEDRONE_FIRERATE;
+        timeToNext = timer1;
     }
+
+    lineOpacity = fmin(timer1, timer2) / timeToNext;
+    lineOpacity = 1.0f - powf(2.0f, -10.0f * lineOpacity);
 
     Drone::update(dt);
 }
@@ -154,6 +162,9 @@ void RedDrone::update(float dt) {
         Drone::fire(REDBULLET_VEL);
         reloadTimer = REDDRONE_FIRERATE;
     }
+
+    lineOpacity = reloadTimer / REDDRONE_FIRERATE;
+    lineOpacity = 1.0f - powf(2.0f, -10.0f * lineOpacity);
 
     Drone::update(dt);
 }

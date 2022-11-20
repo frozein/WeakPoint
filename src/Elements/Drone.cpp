@@ -25,6 +25,8 @@ void Drone::fire(float speed) {
     newBullet.vel = QM_vec2_scale(newBullet.vel, speed);
 
     bullets.push_back(newBullet);
+
+    audio::play_sfx(SFX_BULLET);
 }
 
 const int FORGIVENESS = 15;
@@ -43,6 +45,8 @@ void Drone::update(float dt) {
             active = false;
             playerPtr->score++;
             playerPtr->dash.reset_dash(true);
+
+            audio::play_sfx(SFX_KILL);
         }
     }
 
@@ -64,6 +68,8 @@ void Drone::update(float dt) {
             playerPtr->hp--;
             playerPtr->hurtTimer = 0.5f;
             bullets.erase(bullets.begin() + i);
+
+            audio::play_sfx(SFX_DAMAGE);
         }
     }
 

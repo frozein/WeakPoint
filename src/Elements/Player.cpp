@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "io/audio.hpp"
 
 /*
  * FILE DESCRIPTION:
@@ -63,6 +64,8 @@ void Player::handle_input(SDL_Event e) {
 
                     // update player angle:
                     playerAttr.angle = find_angle(cen, mouse) - 90.0f;
+
+                    audio::play_sfx(SFX_DASH);
                 }
                 break;
             default: break;

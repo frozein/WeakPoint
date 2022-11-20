@@ -36,8 +36,13 @@ VariableText::~VariableText() {
 }
 
 void VariableText::update(float dt) {
+
+    #if !DANIEL
+
     graphics::destroy_string_texture(attrPtr->texture);
     attrPtr->texture = graphics::create_string_texture(*textPtr, FONT_GAME, &attrPtr->dstRect.w, &attrPtr->dstRect.h); 
+
+    #endif
 }
 
 void VariableText::render() {

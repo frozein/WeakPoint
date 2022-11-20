@@ -71,7 +71,7 @@ void graphics::init() {
 
     // Create SDL Window
     window = SDL_CreateWindow(
-        "Rhythm Game", 
+        "Weak Point", 
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED, 
         WINDOW_WIDTH / 5, 
@@ -250,12 +250,6 @@ void graphics::load() {
 
 SDL_Texture* graphics::create_string_texture(std::string str, FontIndex font, int* w, int* h) {
 
-    #if DANIEL
-
-    return NULL;
-
-    #endif
-
     // Create temporary surface:
     SDL_Surface* tempSurface = TTF_RenderText_Blended_Wrapped(fonts[font], str.c_str(), { 255, 255, 255, 255 }, WINDOW_WIDTH);
     if (!tempSurface) {
@@ -267,7 +261,13 @@ SDL_Texture* graphics::create_string_texture(std::string str, FontIndex font, in
 
     // Convert temporary surface to string texture:
     SDL_Texture* strTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+
+    #if !DANIEL
+
     SDL_FreeSurface(tempSurface);
+    
+    #endif
+
     SDL_QueryTexture(strTexture, NULL, NULL, w, h);
     return strTexture;
 

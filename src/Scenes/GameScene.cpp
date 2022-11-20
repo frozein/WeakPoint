@@ -54,11 +54,18 @@ GameScene::GameScene() : gameEnd(false) {
 
     score = "0";
     scoreText = TextureAttributes(TEXTURE_MULTIPURPOSE_PIXEL, graphics::SRC_NULL, { 100, 100, 0, 0 }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 2);
+    
+    #if !DANIEL
     elements.push_back(std::make_shared<VariableText>(&score, &scoreText));
+    #endif
 
     cooldown = "Dash ready!";
     cooldownText = TextureAttributes(TEXTURE_MULTIPURPOSE_PIXEL, graphics::SRC_NULL, { WINDOW_WIDTH / 2, WINDOW_HEIGHT - 200, 0, 0 }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, true, 1);
+    #if DANIEL
+    elements.push_back(std::make_shared<ConstantText>("Dash Ready!", &cooldownText));
+    #else
     elements.push_back(std::make_shared<VariableText>(&cooldown, &cooldownText));
+    #endif
     cooldownIndicator = TextureAttributes(TEXTURE_MULTIPURPOSE_PIXEL, graphics::SRC_NULL, { 0, WINDOW_HEIGHT - 100, 0, 100 }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
     elements.push_back(std::make_shared<Texture>(&cooldownIndicator));
 }
@@ -128,7 +135,14 @@ void GameScene::update(float dt)
         gameEnd = true;
 
     score = std::to_string(playerPtr->score);
+    #if DANIEL
+    if(playerPtr->dash.cooldown > 0.0f)
+        cooldownText.scale = 0.0f;
+    else
+        cooldownText.scale = 1.0f;
+    #else
     cooldown = playerPtr->dash.cooldown > 0.0f ? std::to_string(playerPtr->dash.cooldown).substr(0, 4) : "Dash ready!";
+    #endif
     cooldownIndicator.dstRect.w = WINDOW_WIDTH * ((2.0f - playerPtr->dash.cooldown) / 2.0f);
 
     Scene::update(dt);

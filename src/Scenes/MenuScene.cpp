@@ -16,7 +16,7 @@ MenuScene::MenuScene() : inGame(false) {
     for (int i = 0; i < MAP_H; i++)
     for (int j = 0; j < MAP_W; j++) {
         tiles[i * MAP_W + j] = Map::TileType::GRASS;
-        props[i * MAP_W + j] = i + j % 2 == 0 ? Map::PropType::NONE : Map::PropType::TREE;
+        props[i * MAP_W + j] = rand() % 2 == 0 ? Map::PropType::NONE : Map::PropType::TREE;
     }
 
     map = new Map(MAP_W, MAP_H, tiles, props, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -34,3 +34,8 @@ void MenuScene::update(float dt) {
     if (inGame)
         currentScene = std::make_unique<GameScene>();
 }  
+
+void MenuScene::render() {
+    map->render();
+    Scene::render();
+}

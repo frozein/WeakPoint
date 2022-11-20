@@ -11,7 +11,7 @@
 //BULLET CLASS:
 
 #define BULLET_SIDE 37
-#define BULLET_VEL 7500
+#define BULLET_VEL 750
 
 struct Bullet {
     QMvec2 pos;

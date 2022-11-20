@@ -57,7 +57,7 @@ void Drone::update(float dt) {
 
         // check if bullet contacting player:
         if (bulletHitbox.x + BULLET_SIDE >= playerHitbox.x && bulletHitbox.x <= playerHitbox.x + PLAYER_W &&
-            bulletHitbox.y + BULLET_SIDE >= playerHitbox.y && bulletHitbox.x <= playerHitbox.y + PLAYER_H)
+            bulletHitbox.y + BULLET_SIDE >= playerHitbox.y && bulletHitbox.y <= playerHitbox.y + PLAYER_H)
         {
             playerPtr->hp--;
             playerPtr->hurtTimer = 0.5f;

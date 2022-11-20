@@ -26,9 +26,8 @@ GameScene::~GameScene()
 
 void GameScene::update(float dt)
 {
-    if (playerPtr->hp == 0) {
-        //TODO: end game
-    }
+    if (playerPtr->hp == 0)
+        std::cout << "game end\n";
 
     Scene::update(dt);
 }

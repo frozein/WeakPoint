@@ -1,6 +1,8 @@
 #include "GameScene.hpp"
 
-GameScene::GameScene() {
+GameScene::GameScene() : gameEnd(false) {
+    endscene = new EndScene();
+
     playerPtr = std::make_shared<Player>(500, 500);
     elements.push_back(playerPtr);
 
@@ -35,6 +37,7 @@ GameScene::GameScene() {
         0, 7, 5, 5, 5, 9, 0, 0, 0, 0, 7, 5, 5, 5, 5, 5, 5, 9, 0, 0, 0, 7, 5, 9, 0, 0, 0, 0, 2, 1, 1, 1,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1
     };
+
     int props[MAP_W * MAP_H] = 
     {
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -63,6 +66,14 @@ GameScene::GameScene() {
 GameScene::~GameScene()
 {
     delete map;
+    delete endscene;
+}
+
+void GameScene::handle_input(SDL_Event e) {
+    if (!gameEnd)
+        Scene::handle_input(e);
+    else
+        endscene->handle_input(e);
 }
 
 void GameScene::update(float dt)
@@ -110,8 +121,13 @@ void GameScene::update(float dt)
         nextSpawn = (float)(rand() % 20 + 30) / (playerPtr->score + 10.0f);
     }
 
-    /*if (playerPtr->hp == 0)
-        std::cout << "game end\n";*/
+    if (gameEnd) {
+        endscene->update(dt);
+        return;
+    }
+
+    if (playerPtr->hp == 0)
+        gameEnd = true;
 
     score = std::to_string(playerPtr->score);
     cooldown = playerPtr->dash.cooldown > 0.0f ? std::to_string(playerPtr->dash.cooldown).substr(0, 4) : "Dash ready!";
@@ -124,4 +140,7 @@ void GameScene::render()
 {
     map->render();
     Scene::render();
+
+    if (gameEnd)
+        endscene->render();
 }

@@ -85,7 +85,13 @@ void Drone::render() {
     });
 
     graphics::render_texture(droneAttr);
-    graphics::render_texture(TextureAttributes(TEXTURE_LINE, graphics::SRC_NULL, { (int)cen.x, (int)cen.y, 50, 5 }, weakSpot, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, true, 1));
+
+    QMvec2 rotorPos = QM_vec2_add(cen, QM_vec2_scale({cosf(QM_deg_to_rad(droneAttr.angle)), sinf(QM_deg_to_rad(droneAttr.angle))}, 75.0f));
+    graphics::render_texture(TextureAttributes(TEXTURE_MULTIPURPOSE_PIXEL, graphics::SRC_NULL, { (int)(rotorPos.x), (int)(rotorPos.y), 10, 60}, (float)SDL_GetTicks(), NULL, SDL_FLIP_NONE, {70, 70, 70, 255}, true, 1));
+    rotorPos = QM_vec2_add(cen, QM_vec2_scale({cosf(QM_deg_to_rad(droneAttr.angle + 180.0f)), sinf(QM_deg_to_rad(droneAttr.angle + 180.0f))}, 75.0f));
+    graphics::render_texture(TextureAttributes(TEXTURE_MULTIPURPOSE_PIXEL, graphics::SRC_NULL, { (int)(rotorPos.x), (int)(rotorPos.y), 10, 60}, (float)SDL_GetTicks(), NULL, SDL_FLIP_NONE, {70, 70, 70, 255}, true, 1));
+
+    graphics::render_texture(TextureAttributes(TEXTURE_LINE, graphics::SRC_NULL, { (int)cen.x, (int)cen.y, 195, 10 }, weakSpot, NULL, SDL_FLIP_NONE, {255, 255, 255, 255}, true, 1));
 }
 
 //----------------------------------------------------------------------//

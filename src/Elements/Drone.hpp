@@ -10,8 +10,8 @@
 //----------------------------------------------------------------------//
 //BULLET CLASS:
 
-#define BULLET_SIDE 25
-#define BULLET_VEL 1500
+#define BULLET_SIDE 37
+#define BULLET_VEL 7500
 
 struct Bullet {
     QMvec2 pos;
@@ -21,8 +21,8 @@ struct Bullet {
 //----------------------------------------------------------------------//
 //BASE DRONE CLASS:
 
-#define DRONE_W 110
-#define DRONE_H 90
+#define DRONE_W 165
+#define DRONE_H 135
 
 #define DRONE_ROTVEL 40
 
@@ -87,7 +87,7 @@ public:
 //----------------------------------------------------------------------//
 //RED DRONES:
 
-#define REDBULLET_VEL 3000
+#define REDBULLET_VEL 1500
 #define REDDRONE_FIRERATE 3.0f
 
 class RedDrone : public Drone {

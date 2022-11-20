@@ -4,32 +4,30 @@ struct AABB
 	int minY, maxY;
 };
 
-#define MAP_W 48
-#define MAP_H 27
-
-#define TILE_SIDE 80
+#define MAP_W 32
+#define MAP_H 18
 
 class Map
 {
 public:
-	enum class TileType
+	enum class TileType : int
 	{
-		GRASS,
-		DIRT,
-		TRANS_L,
-		TRANS_R,
-		TRANS_T,
-		TRANS_B,
-		TRANS_LT,
-		TRANS_LB,
-		TRANS_RT,
-		TRANS_RB
+		GRASS    = 0,
+		DIRT     = 1,
+		TRANS_L  = 2,
+		TRANS_R  = 3,
+		TRANS_T  = 4,
+		TRANS_B  = 5,
+		TRANS_LT = 6,
+		TRANS_LB = 7,
+		TRANS_RT = 8,
+		TRANS_RB = 9
 	};
 
-	enum class PropType
+	enum class PropType : int
 	{
-		TREE,
-		NONE
+		NONE = 0,
+		TREE = 1
 	};
 
 private:

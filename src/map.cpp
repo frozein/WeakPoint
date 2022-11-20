@@ -56,7 +56,7 @@ void Map::render()
 		destRect.y = y * tileSize + mapT;
 		destRect.w = destRect.h = tileSize;
 
-		float angle = 90.0f * (rands[x + y * w] / 4 % 4);
+		float angle = 0.0f;
 
 		switch(tiles[x + y * w]) //TODO: add rest of tile types
 		{
@@ -64,14 +64,64 @@ void Map::render()
 		{
 			srcRect.x = rands[x + y * w] % 4 * MAP_SRC_SIZE;
 			srcRect.y = 0;
+			angle = 90.0f * (rands[x + y * w] / 4 % 4);
 			break;
 		}
 		case TileType::DIRT:
 		{
 			srcRect.x = rands[x + y * w] % 4 * MAP_SRC_SIZE;
 			srcRect.y = MAP_SRC_SIZE;
+			angle = 90.0f * (rands[x + y * w] / 4 % 4);
+			break;
+		}
+		case TileType::TRANS_B:
+		{
+			srcRect.x = 0;
+			srcRect.y = 2 * MAP_SRC_SIZE;
 			break;
 		}	
+		case TileType::TRANS_T:
+		{
+			srcRect.x = 1 * MAP_SRC_SIZE;
+			srcRect.y = 2 * MAP_SRC_SIZE;
+			break;
+		}
+		case TileType::TRANS_L:
+		{
+			srcRect.x = 2 * MAP_SRC_SIZE;
+			srcRect.y = 2 * MAP_SRC_SIZE;
+			break;
+		}
+		case TileType::TRANS_R:
+		{
+			srcRect.x = 3 * MAP_SRC_SIZE;
+			srcRect.y = 2 * MAP_SRC_SIZE;
+			break;
+		}
+		case TileType::TRANS_RT:
+		{
+			srcRect.x = 4 * MAP_SRC_SIZE;
+			srcRect.y = 2 * MAP_SRC_SIZE;
+			break;
+		}
+		case TileType::TRANS_RB:
+		{
+			srcRect.x = 5 * MAP_SRC_SIZE;
+			srcRect.y = 2 * MAP_SRC_SIZE;
+			break;
+		}
+		case TileType::TRANS_LT:
+		{
+			srcRect.x = 6 * MAP_SRC_SIZE;
+			srcRect.y = 2 * MAP_SRC_SIZE;
+			break;
+		}
+		case TileType::TRANS_LB:
+		{
+			srcRect.x = 7 * MAP_SRC_SIZE;
+			srcRect.y = 2 * MAP_SRC_SIZE;
+			break;
+		}
 		}
 
 		TextureAttributes attrib = TextureAttributes(TEXTURE_TILESET, srcRect, destRect,

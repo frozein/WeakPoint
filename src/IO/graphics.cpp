@@ -199,9 +199,9 @@ void graphics::load() {
     graphics::load_texture(TEXTURE_MULTIPURPOSE_PIXEL, "../../assets/art/multipurpose_pixel.png");
 
     //- menu -//
-    graphics::load_texture(TEXTURE_ANIMATED_BUTTON, "../../art/animated_button.png");
-    graphics::load_texture(TEXTURE_LOGO, "../../art/logo.png");
-    graphics::load_texture(TEXTURE_VIGNETTE, "../../art/vignette.png");
+    graphics::load_texture(TEXTURE_ANIMATED_BUTTON, "../../assets/art/animated_button.png");
+    graphics::load_texture(TEXTURE_LOGO, "../../assets/art/logo.png");
+    graphics::load_texture(TEXTURE_VIGNETTE, "../../assets/art/vignette.png");
 
     //- game -//
     graphics::load_texture(TEXTURE_PLAYER, "../../assets/art/player.png");

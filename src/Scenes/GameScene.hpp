@@ -25,6 +25,8 @@ private:
     std::vector< std::shared_ptr<Drone> > dronePtrs;
     Map* map;
 
+    float nextSpawn = 3.0f;
+
 public:
     GameScene();
     ~GameScene();

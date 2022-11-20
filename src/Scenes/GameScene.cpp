@@ -52,8 +52,6 @@ GameScene::GameScene() : gameEnd(false) {
     playerPtr = std::make_shared<Player>(500, 500, map);
     elements.push_back(playerPtr);
 
-    elements.push_back(std::make_shared<RedDrone>(playerPtr, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
-
     score = "0";
     scoreText = TextureAttributes(TEXTURE_MULTIPURPOSE_PIXEL, graphics::SRC_NULL, { 100, 100, 0, 0 }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 2);
     elements.push_back(std::make_shared<VariableText>(&score, &scoreText));
@@ -80,6 +78,47 @@ void GameScene::handle_input(SDL_Event e) {
 
 void GameScene::update(float dt)
 {
+    nextSpawn -= dt;
+    if(nextSpawn <= 0.0f)
+    {      
+        while(true)
+        {
+            int x = rand() % WINDOW_WIDTH;
+            int y = rand() % WINDOW_HEIGHT;
+
+            int minX, minY;
+            int maxX, maxY;
+            map->get_map_pos(x - DRONE_W / 2, y - DRONE_H / 2, &minX, &minY);
+            map->get_map_pos(x + DRONE_W / 2, y + DRONE_H / 2, &maxX, &maxY);
+
+            AABB temp;
+            bool obstructed = false;
+            for(int i = minX; i <= maxX; i++)
+            for(int j = minY; j <= maxY; j++)
+                obstructed = obstructed | map->aabb_at(i, j, &temp);
+            
+            if(!obstructed)
+            {
+                switch(rand() % 3)
+                {
+                case 0:
+                    elements.push_back(std::make_shared<RedDrone>(playerPtr, x, y));
+                    break;
+                case 1:
+                    elements.push_back(std::make_shared<GreenDrone>(playerPtr, x, y));
+                    break;
+                case 2:
+                    elements.push_back(std::make_shared<PurpleDrone>(playerPtr, x, y));
+                    break;
+                }
+
+                break;
+            }
+        }
+
+        nextSpawn = (float)(rand() % 20 + 30) / (playerPtr->score + 10.0f);
+    }
+
     if (gameEnd) {
         endscene->update(dt);
         return;

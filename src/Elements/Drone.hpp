@@ -24,6 +24,8 @@ struct Bullet {
 #define DRONE_W 110
 #define DRONE_H 90
 
+#define DRONE_ROTVEL 40
+
 class Drone : public Element {
 
 private:

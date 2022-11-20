@@ -81,8 +81,6 @@ void GameScene::update(float dt)
     nextSpawn -= dt;
     if(nextSpawn <= 0.0f)
     {      
-        printf("spawned\n");
-
         while(true)
         {
             int x = rand() % WINDOW_WIDTH;

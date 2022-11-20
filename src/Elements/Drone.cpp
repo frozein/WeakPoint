@@ -57,7 +57,8 @@ void Drone::update(float dt) {
             bullets.erase(bullets.begin() + i);
 
         // check if bullet contacting player:
-        if (bulletHitbox.x + BULLET_SIDE >= playerHitbox.x && bulletHitbox.x <= playerHitbox.x + PLAYER_W &&
+        if (QM_vec2_dot(QM_vec2_sub(cen, bulletHitbox), QM_vec2_sub(cen, bulletHitbox)) > 6400.0f &&
+            bulletHitbox.x + BULLET_SIDE >= playerHitbox.x && bulletHitbox.x <= playerHitbox.x + PLAYER_W &&
             bulletHitbox.y + BULLET_SIDE >= playerHitbox.y && bulletHitbox.y <= playerHitbox.y + PLAYER_H)
         {
             playerPtr->hp--;

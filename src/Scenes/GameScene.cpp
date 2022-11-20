@@ -139,6 +139,9 @@ void GameScene::render()
     map->render();
     Scene::render();
 
+    for (int i = 0; i < playerPtr->hp; i++)
+        graphics::render_texture(TextureAttributes(TEXTURE_HEART, graphics::SRC_NULL, { WINDOW_WIDTH - 330 - 200 * i, 150, 180, 160 }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1));
+
     if (gameEnd)
         endscene->render();
 }

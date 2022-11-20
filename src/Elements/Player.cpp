@@ -90,8 +90,6 @@ void Player::update(float dt) {
             playerAttr.color = { 255, 255, 255, 255 };
     }
 
-    std::cout << dash.dashTime << "\n";
-
     // if dashing:
     if (dash.dashTime > 0.0f) {
         pos.x += vel.x * dt; // dash vel is calculated in handle input.

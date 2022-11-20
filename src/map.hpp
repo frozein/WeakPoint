@@ -1,3 +1,5 @@
+#pragma once
+
 struct AABB
 {
 	int minX, maxX;

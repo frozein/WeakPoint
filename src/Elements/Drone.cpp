@@ -68,13 +68,19 @@ void Drone::update(float dt) {
 
     // adjust angle:
     QMvec2 playerCen = { (float)playerPtr->playerAttr.dstRect.x + PLAYER_W / 2, (float)playerPtr->playerAttr.dstRect.y + PLAYER_H / 2 };
+    
     float wantedAngle = find_angle(cen, playerCen) - 90;
-    while (wantedAngle < 0.0f)  wantedAngle += 360.0f;
+    while (wantedAngle < 0.0f)  
+        wantedAngle += 360.0f;
+    
     float droneAngle = droneAttr.angle;
-    while (droneAngle < 0.0f)   droneAngle += 360.0f;
+    while (droneAngle < 0.0f)  
+        droneAngle += 360.0f;
+        
     float diff = wantedAngle - droneAngle;
-    while (diff < 0.0f)  diff += 360.0f;
-    std::cout << diff << "\n";
+    while (diff < 0.0f)  
+        diff += 360.0f;
+
     if (diff <= 180.0f) droneAttr.angle += DRONE_ROTVEL * dt;
     else                droneAttr.angle -= DRONE_ROTVEL * dt;
 }

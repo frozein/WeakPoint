@@ -11,9 +11,9 @@
 //--- Dash Settings ---//
 
 #define DASH_RESET 2.0f
-#define DASH_TIME  0.4f
+#define DASH_TIME  0.15f
 
-#define DASH_VEL 2000
+#define DASH_VEL 4500
 
 struct Dash {
     float cooldown;
@@ -26,8 +26,8 @@ struct Dash {
 
 //--- Player Settings ---//
 
-#define PLAYER_W 80
-#define PLAYER_H 80
+#define PLAYER_W 97
+#define PLAYER_H 90
 
 #define PLAYER_VEL 750
 #define PLAYER_ACC 7500 // how fast the player speeds up/slows down

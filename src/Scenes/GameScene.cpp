@@ -68,6 +68,8 @@ GameScene::GameScene() : gameEnd(false) {
     #endif
     cooldownIndicator = TextureAttributes(TEXTURE_MULTIPURPOSE_PIXEL, graphics::SRC_NULL, { 0, WINDOW_HEIGHT - 100, 0, 100 }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, false, 1);
     elements.push_back(std::make_shared<Texture>(&cooldownIndicator));
+
+    audio::play_music(MUSIC_GAME);
 }
 
 GameScene::~GameScene()

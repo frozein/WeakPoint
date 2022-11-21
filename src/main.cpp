@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
                     mousePos.y = e.motion.y;
                 }
 
-                if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE)
+                if (e.type == SDL_QUIT)
                     running = false;
 
                 currentScene->handle_input(e);

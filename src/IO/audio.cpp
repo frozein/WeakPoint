@@ -101,23 +101,14 @@ void audio::load_sfx(SfxIndex idx, const char* filePath, unsigned int volume) {
 void audio::load() {
 
     //--- LOAD MUSIC ---//
+    load_music(MUSIC_MENU, "music/menu.wav");
+    load_music(MUSIC_GAME, "music/game.wav");
 
     //--- LOAD SFX ---//
-    #if DANIEL
-
-    load_sfx(SFX_DASH, "../../assets/sfx/dash.wav", 128);
-    load_sfx(SFX_BULLET, "../../assets/sfx/bullet.wav", 25);
-    load_sfx(SFX_KILL, "../../assets/sfx/kill.wav", 128);
-    load_sfx(SFX_DAMAGE, "../../assets/sfx/damage.wav", 128);
-
-    #else
-
     load_sfx(SFX_DASH, "sfx/dash.wav", 128);
     load_sfx(SFX_BULLET, "sfx/bullet.wav", 25);
     load_sfx(SFX_KILL, "sfx/kill.wav", 128);
     load_sfx(SFX_DAMAGE, "sfx/damage.wav", 128);
-
-    #endif
 }
 
 //------------------------------------------------------------------------------------------------//

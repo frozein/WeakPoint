@@ -76,7 +76,7 @@ void graphics::init() {
         SDL_WINDOWPOS_CENTERED, 
         WINDOW_WIDTH / 5, 
         WINDOW_HEIGHT / 5, 
-        SDL_WINDOW_SHOWN
+        SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP
     );
 
     if (window == NULL) {
@@ -106,8 +106,6 @@ void graphics::init() {
     std::for_each(fonts.begin(), fonts.end(), [](TTF_Font* font) { font = nullptr; });
 
     // Set window:
-    Uint32 SDLFullscreenFlag = graphics::isFullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0;
-    SDL_SetWindowFullscreen(window, SDLFullscreenFlag);
     SDL_SetWindowResizable(window, SDL_TRUE);
 }
 
@@ -192,32 +190,7 @@ void graphics::load_font(FontIndex idx, const char* filePath) {
 }
     
 void graphics::load() {
-    #if DANIEL
-    //--- LOAD TEXTURES ---//
 
-    //- general -//
-    graphics::load_texture(TEXTURE_MULTIPURPOSE_PIXEL, "../../assets/art/multipurpose_pixel.png");
-
-    //- menu -//
-    graphics::load_texture(TEXTURE_ANIMATED_BUTTON, "../../assets/art/animated_button.png");
-    graphics::load_texture(TEXTURE_LOGO, "../../assets/art/logo.png");
-    graphics::load_texture(TEXTURE_VIGNETTE, "../../assets/art/vignette.png");
-    graphics::load_texture(TEXTURE_HEART, "../../assets/art/heart.png");
-
-    //- game -//
-    graphics::load_texture(TEXTURE_PLAYER, "../../assets/art/player.png");
-    graphics::load_texture(TEXTURE_TILESET, "../../assets/art/tileset.png");
-
-    graphics::load_texture(TEXTURE_BULLET, "../../assets/art/bullet.png");
-    graphics::load_texture(TEXTURE_DRONE_GREEN, "../../assets/art/droneGreen.png");
-    graphics::load_texture(TEXTURE_DRONE_PURPLE, "../../assets/art/dronePurple.png");
-    graphics::load_texture(TEXTURE_DRONE_RED, "../../assets/art/droneRed.png");
-    graphics::load_texture(TEXTURE_LINE, "../../assets/art/line.png");
-
-    //--- LOAD FONTS ---//
-    graphics::load_font(FONT_GAME, "../../assets/fonts/FFFFORWA.TTF");
-
-    #else
     //--- LOAD TEXTURES ---//
 
     //- general -//
@@ -241,8 +214,6 @@ void graphics::load() {
 
     //--- LOAD FONTS ---//
     graphics::load_font(FONT_GAME, "fonts/FFFFORWA.TTF");
-
-    #endif
 }
 
 //------------------------------------------------------------------------------------------------//

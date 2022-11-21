@@ -22,6 +22,8 @@ MenuScene::MenuScene() : inGame(false) {
     }
 
     map = new Map(MAP_W, MAP_H, tiles, props, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    audio::play_music(MUSIC_MENU);
 }
 
 MenuScene::~MenuScene() {

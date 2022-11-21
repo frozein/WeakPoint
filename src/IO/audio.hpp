@@ -13,7 +13,8 @@
 // Represents all of the music files available and their indices.
 // All indices are expected to be properly loaded, use audio::load_music() for every index.
 enum MusicIndex : unsigned char {
-
+    MUSIC_MENU,
+    MUSIC_GAME
 };
 
 // Represents all of the SFX sound effects available and their indices.

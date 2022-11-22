@@ -10,6 +10,9 @@ A simple action game where you dash through endlessly spawning drones to kill th
 
 ## Screenshots
 
+![alt text](https://github.com/frozein/WeakPoint/blob/master/assets/screenshots/1.PNG)
+![alt text](https://github.com/frozein/WeakPoint/blob/master/assets/screenshots/2.PNG)
+
 ## Build
 
 ### Windows

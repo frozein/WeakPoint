@@ -19,8 +19,6 @@
  * Includes globally relevant information.
  */
 
-#define DANIEL 1
-
 extern bool running;
 struct ivec2;
 extern ivec2 mousePos;

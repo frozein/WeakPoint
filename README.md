@@ -15,8 +15,6 @@ A simple action game where you dash through endlessly spawning drones to kill th
 
 ## Build
 
-### Windows
-
 1. Clone repository
 2. Install [CMake](https://cmake.org/)
 3. Install the following dependencies (in a location CMake can locate):

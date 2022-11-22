@@ -38,10 +38,7 @@ void Drone::update(float dt) {
         playerHitbox.y + PLAYER_H >= pos.y && playerHitbox.y <= pos.y + DRONE_H &&
         playerPtr->dash.dashTime > 0.0f)
     {
-        int dash = (int)playerPtr->dash.angle % 180;
-        int weak = (int)weakSpot % 180;
-
-        if (abs(dash - weak) % 180 <= FORGIVENESS || abs(dash - weak) % 180 >= 180 - FORGIVENESS) { // drone has been destroyed
+        if ((int)abs(playerPtr->dash.angle - weakSpot) % 180 <= FORGIVENESS || (int)abs(playerPtr->dash.angle - weakSpot) % 180 >= 180 - FORGIVENESS) { // drone has been destroyed
             active = false;
             playerPtr->score++;
             playerPtr->dash.reset_dash(true);
@@ -76,19 +73,11 @@ void Drone::update(float dt) {
     // adjust angle:
     QMvec2 playerCen = { (float)playerPtr->playerAttr.dstRect.x + PLAYER_W / 2, (float)playerPtr->playerAttr.dstRect.y + PLAYER_H / 2 };
     
-    float wantedAngle = find_angle(cen, playerCen) - 90;
-    while (wantedAngle < 0.0f)  
-        wantedAngle += 360.0f;
-    
-    float droneAngle = droneAttr.angle;
-    while (droneAngle < 0.0f)  
-        droneAngle += 360.0f;
-        
-    float diff = wantedAngle - droneAngle;
-    while (diff < 0.0f)  
-        diff += 360.0f;
+    int wantedAngle = (int)find_angle(cen, playerCen) - 90;
+    int diff = wantedAngle - droneAttr.angle;
+    diff = (diff % 360 + 360) % 360;
 
-    if (diff <= 180.0f) droneAttr.angle += DRONE_ROTVEL * dt;
+    if (diff <= 180)    droneAttr.angle += DRONE_ROTVEL * dt;
     else                droneAttr.angle -= DRONE_ROTVEL * dt;
 }
 

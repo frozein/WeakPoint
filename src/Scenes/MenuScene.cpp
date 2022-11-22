@@ -1,7 +1,6 @@
 #include "MenuScene.hpp"
 #include "Scenes/GameScene.hpp"
 
-
 MenuScene::MenuScene() : inGame(false) {
     logoAttr = TextureAttributes(TEXTURE_LOGO, graphics::SRC_NULL, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 5, 1475, 500 }, 0.0, NULL, SDL_FLIP_NONE, { 255, 255, 255, 255 }, true, 1);
 	elements.push_back(std::make_shared<Texture>(&logoAttr));
